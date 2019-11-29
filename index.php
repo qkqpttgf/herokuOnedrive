@@ -33,12 +33,7 @@ $config = [
     'passfile' => $_SERVER['passfile'],
     'imgup_path' => $_SERVER['imgup_path'],
 ];
-if (!function_exists('getenv')) {
-	function getenv($str)
-	{
-		return $_SERVER[$str];
-	}
-}
+
 if ($context['request_id']=='') {
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
@@ -136,7 +131,7 @@ function main_handler($event, $context)
 
     config_oauth();
 
-    if (!$oauth['refresh_token']) $oauth['refresh_token'] = getenv('t1').getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
+    if (!$oauth['refresh_token']) $oauth['refresh_token'] = $_SERVER('t1').getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
     if (!$oauth['refresh_token']) {
 	    /*echo 'REQUEST_URI:'.$_SERVER['REQUEST_URI'].'<br>
 REDIRECT_URL:'.$_SERVER['REDIRECT_URL'].'<br>
