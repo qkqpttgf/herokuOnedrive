@@ -49,18 +49,14 @@ function main_handler($event, $context)
     global $config;
     $event = json_decode(json_encode($event), true);
     $context = json_decode(json_encode($context), true);
-    $event1 = $event;
-    if (strlen(json_encode($event1['body']))>500) $event1['body']=substr($event1['body'],0,strpos($event1['body'],'base64')+10) . '...Too Long!...' . substr($event1['body'],-50);
-    echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . '
- 
-' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . '
- 
-';
-    unset($event1);
-    unset($_POST);
-    unset($_GET);
-    unset($_COOKIE);
-    unset($_SERVER);
+    //$event1 = $event;
+    //if (strlen(json_encode($event1['body']))>500) $event1['body']=substr($event1['body'],0,strpos($event1['body'],'base64')+10) . '...Too Long!...' . substr($event1['body'],-50);
+    //echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . ' ' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . ' ';
+    //unset($event1);
+    //unset($_POST);
+    //unset($_GET);
+    //unset($_COOKIE);
+    //unset($_SERVER);
     date_default_timezone_set(get_timezone($_COOKIE['timezone']));
     $function_name = $context['function_name'];
     $config['function_name'] = $function_name;
