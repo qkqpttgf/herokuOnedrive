@@ -1,8 +1,12 @@
 <?php
-echo $_SERVER['REMOTE_ADDR'];
-print_r($_GET);
-print_r($_POST);
-print_r($_SERVER);
-print_r($_COOKIE);
+//echo $_SERVER['REMOTE_ADDR'];
+echo json_encode($_GET, JSON_PRETTY_PRINT) . '
+';
+echo json_encode($_POST, JSON_PRETTY_PRINT) . '
+';
+echo json_encode($_SERVER, JSON_PRETTY_PRINT) . '
+';
+echo json_encode($_COOKIE, JSON_PRETTY_PRINT) . '
+';
 
 ?>
