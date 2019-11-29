@@ -41,10 +41,10 @@ if ($context['request_id']=='') {
 	if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
 	$event['path'] = $_SERVER['REDIRECT_URL'];
 	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?'));
-	$getstrarr = explode("&",$getsrt);
+	$getstrarr = explode("&",$getstr);
     foreach ($getstrarr as $getvalues) {
         $pos = strpos($getvalues,"=");
-		echo $pos;
+		//echo $pos;
 		if ($pos>0) {
 			$getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
 		} else $getarry[urldecode($getvalues)] = true;
