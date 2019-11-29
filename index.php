@@ -131,12 +131,12 @@ function main_handler($event, $context)
 
     config_oauth();
 
-    if (!$oauth['refresh_token']) $oauth['refresh_token'] = $_SERVER['t1'].getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
+    if (!$oauth['refresh_token']) $oauth['refresh_token'] = $_SERVER['t1'].$_SERVER['t2'].$_SERVER['t3'].$_SERVER['t4'].$_SERVER['t5'].$_SERVER['t6'].$_SERVER['t7'];
     if (!$oauth['refresh_token']) {
-	    /*echo 'REQUEST_URI:'.$_SERVER['REQUEST_URI'].'<br>
+	    echo 'REQUEST_URI:'.$_SERVER['REQUEST_URI'].'<br>
 REDIRECT_URL:'.$_SERVER['REDIRECT_URL'].'<br>
 getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'<br>
-'.json_encode($_GET, JSON_PRETTY_PRINT);*/
+'.json_encode($_GET, JSON_PRETTY_PRINT);
         if ($_GET['authorization_code'] && isset($_GET['code'])) {
             return message(get_refresh_token($_GET['code']));
         }
