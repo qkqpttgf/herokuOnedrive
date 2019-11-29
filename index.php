@@ -48,7 +48,7 @@ if ($context['request_id']=='') {
 			$getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
 		} else $getarry[urldecode($getvalues)] = true;
     }
-	$event['queryString'] = json_encode($getarry);
+	$event['queryString'] = $getarry;
 	$event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	$context['function_name'] = 'heroonedrive';
 	$re = main_handler($event, $context);
