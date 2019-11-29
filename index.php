@@ -1,27 +1,20 @@
 <?php
-//include "pa.php";
 include "phpqrcode.php";
 
-
-// ▒▒ɵ▒▒ļ▒▒▒
 $filename = 'QR-'.date("Ymd-His").'.png';
-// ▒▒▒▒▒L▒▒M▒▒Q▒▒H
 $errorCorrectionLevel = 'L';
-// ▒▒Ĵ▒С▒▒1▒▒10
 $matrixPointSize = 2;
-//▒▒▒▒һ▒▒▒ά▒▒▒ļ▒
 if($_GET["f"]==1){
 QRcode::png($_GET["key"], $filename, $errorCorrectionLevel, $matrixPointSize, 1);
 }
-//▒▒▒▒▒ά▒뵽▒▒▒▒▒
 //QRcode::png($data);
 QRcode::png($_GET["key"], false, $errorCorrectionLevel, $matrixPointSize, 1);
 
 /*
 $value=$_GET["key"];
-$logo = 'favicon.png'; // ▒м▒▒logo
-$QR = "base.png"; // ▒Զ▒▒▒▒▒ɵġ▒▒▒▒▒▒▒▒▒ɾ▒▒
-$last = "last.png"; // ▒▒▒▒▒▒ɵ▒ͼƬ
+$logo = 'favicon.png';
+$QR = "base.png";
+$last = "last.png";
 $errorCorrectionLevel = 'L';
 $matrixPointSize = 10;
 QRcode::png($value, $QR, $errorCorrectionLevel, $matrixPointSize, 2);
@@ -38,7 +31,7 @@ if($logo !== FALSE){
     $from_width = ($QR_width - $logo_qr_width) / 2;
     imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
 }
-imagepng($QR,$last); // ▒▒▒▒▒▒յ▒▒ļ▒
+imagepng($QR,$last);
 echo "<img src=last.png>";
 */
 ?>
