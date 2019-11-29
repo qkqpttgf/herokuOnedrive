@@ -33,6 +33,12 @@ $config = [
     'passfile' => $_SERVER['passfile'],
     'imgup_path' => $_SERVER['imgup_path'],
 ];
+if (!function_exists('getenv')) {
+	function getenv($str)
+	{
+		return $_SERVER[$str];
+	}
+}
 if ($context['request_id']=='') {
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
@@ -71,7 +77,7 @@ function main_handler($event, $context)
     //if (strlen(json_encode($event1['body']))>500) $event1['body']=substr($event1['body'],0,strpos($event1['body'],'base64')+10) . '...Too Long!...' . substr($event1['body'],-50);
     //echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . ' ' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . ' ';
     //unset($event1);
-	echo '<pre>'.json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
+	//echo '<pre>'.json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
     //unset($_POST);
     unset($_GET);
     //unset($_COOKIE);
@@ -132,10 +138,10 @@ function main_handler($event, $context)
 
     if (!$oauth['refresh_token']) $oauth['refresh_token'] = getenv('t1').getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
     if (!$oauth['refresh_token']) {
-	    echo 'REQUEST_URI:'.$_SERVER['REQUEST_URI'].'<br>
+	    /*echo 'REQUEST_URI:'.$_SERVER['REQUEST_URI'].'<br>
 REDIRECT_URL:'.$_SERVER['REDIRECT_URL'].'<br>
 getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'<br>
-'.json_encode($_GET, JSON_PRETTY_PRINT);
+'.json_encode($_GET, JSON_PRETTY_PRINT);*/
         if ($_GET['authorization_code'] && isset($_GET['code'])) {
             return message(get_refresh_token($_GET['code']));
         }
@@ -147,7 +153,7 @@ getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'
         if (url.substr(-1)!="/") url+="/";
         url="'. $oauth['oauth_url'] .'authorize?scope='. $oauth['scope'] .'&response_type=code&client_id='. $oauth['client_id'] .'&redirect_uri='. $oauth['redirect_uri'] . '&state=' .'"+encodeURIComponent(url);
         document.getElementById(\'a1\').href=url;
-        //window.open(url,"_blank");
+        window.open(url,"_blank");
     </script>
     ', 'Error', 500);
     }
