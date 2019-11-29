@@ -44,6 +44,7 @@ if ($context['request_id']=='') {
 	$getstrarr = explode("&",$getsrt);
     foreach ($getstrarr as $getvalues) {
         $pos = strpos($getvalues,"=");
+		echo $pos;
 		if ($pos>0) {
 			$getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
 		} else $getarry[urldecode($getvalues)] = true;
