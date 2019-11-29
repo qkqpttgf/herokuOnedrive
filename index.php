@@ -38,6 +38,7 @@ if ($context['request_id']=='') {
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
 	];
+	if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
 	$event['path'] = $_SERVER['REDIRECT_URL'];
 	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?'));
 	$getstrarr = explode("&",$getsrt);
