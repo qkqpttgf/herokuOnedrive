@@ -33,15 +33,31 @@ $config = [
     'passfile' => $_SERVER['passfile'],
     'imgup_path' => $_SERVER['imgup_path'],
 ];
-$event['headers'] = [
-  'cookie' => $_COOKIE,
-  'host' => $_SERVER['HTTP_HOST'],
-];
-$event['path'] = $_SERVER['REDIRECT_URL'];
-$event['queryString'] = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?'));
-$event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-$context['function_name'] = 'heroonedrive';
-echo main_handler($event, $context);
+if ($context['request_id']=='') {
+	$event['headers'] = [
+  		'cookie' => $_COOKIE,
+  		'host' => $_SERVER['HTTP_HOST'],
+	];
+	$event['path'] = $_SERVER['REDIRECT_URL'];
+	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?'));
+	$getstrarr = explode("&",$getsrt);
+    foreach ($getstrarr as $getvalues) {
+        $pos = strpos($getvalues,"=");
+		if ($pos>0) {
+			$getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
+		} else $getarry[urldecode($getvalues)] = true;
+    }
+	$event['queryString'] = json_encode($getarry);
+	$event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	$context['function_name'] = 'heroonedrive';
+	$re = main_handler($event, $context);
+	$sendHeaders = array();
+    foreach ($re['headers'] as $headerName => $headerVal) {
+        header($headerName . ': ' . $headerVal, true);
+    }
+	http_response_code($re['statusCode']);
+	echo $re['body'];
+}
 
 function main_handler($event, $context)
 {
