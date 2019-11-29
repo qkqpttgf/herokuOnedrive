@@ -113,6 +113,7 @@ function main_handler($event, $context)
 
     if (!$oauth['refresh_token']) $oauth['refresh_token'] = getenv('t1').getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
     if (!$oauth['refresh_token']) {
+	    echo json_encode($_GET, JSON_PRETTY_PRINT);
         if ($_GET['authorization_code'] && isset($_GET['code'])) {
             return message(get_refresh_token($_GET['code']));
         }
