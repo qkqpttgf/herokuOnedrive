@@ -33,7 +33,12 @@ $config = [
     'passfile' => $_SERVER['passfile'],
     'imgup_path' => $_SERVER['imgup_path'],
 ];
-
+if (!function_exists('getenv')) {
+	function getenv($str)
+	{
+		return $_SERVER[$str];
+	}
+}
 if ($context['request_id']=='') {
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
