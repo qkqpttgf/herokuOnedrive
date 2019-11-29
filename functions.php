@@ -165,13 +165,13 @@ function get_timezone($timezone = '8')
 function output($body, $statusCode = 200, $headers = ['Content-Type' => 'text/html'], $isBase64Encoded = false)
 {
     //$headers['Access-Control-Allow-Origin']='*';
-    /*return [
+    return [
         'isBase64Encoded' => $isBase64Encoded,
         'statusCode' => $statusCode,
         'headers' => $headers,
         'body' => $body
-    ];*/
-    return $body;
+    ];
+    //return $body;
 }
 
 function message($message, $title = 'Message', $statusCode = 200)
