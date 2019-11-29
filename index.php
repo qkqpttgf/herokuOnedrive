@@ -113,7 +113,7 @@ function main_handler($event, $context)
 
     if (!$oauth['refresh_token']) $oauth['refresh_token'] = getenv('t1').getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
     if (!$oauth['refresh_token']) {
-	    echo json_encode($_GET, JSON_PRETTY_PRINT);
+	    echo $_SERVER['REQUEST_URI'].json_encode($_GET, JSON_PRETTY_PRINT);
         if ($_GET['authorization_code'] && isset($_GET['code'])) {
             return message(get_refresh_token($_GET['code']));
         }
@@ -125,7 +125,7 @@ function main_handler($event, $context)
         if (url.substr(-1)!="/") url+="/";
         url="'. $oauth['oauth_url'] .'authorize?scope='. $oauth['scope'] .'&response_type=code&client_id='. $oauth['client_id'] .'&redirect_uri='. $oauth['redirect_uri'] . '&state=' .'"+encodeURIComponent(url);
         document.getElementById(\'a1\').href=url;
-        window.open(url,"_blank");
+        //window.open(url,"_blank");
     </script>
     ', 'Error', 500);
     }
