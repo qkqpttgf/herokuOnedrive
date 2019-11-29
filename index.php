@@ -43,6 +43,7 @@ if ($context['request_id']=='') {
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
+		'x-requested-with' => $_SERVER['x-requested-with'],
 	];
 	if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
 	$event['path'] = $_SERVER['REDIRECT_URL'];
