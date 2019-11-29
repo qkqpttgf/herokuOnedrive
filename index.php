@@ -70,7 +70,7 @@ function main_handler($event, $context)
     //echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . ' ' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . ' ';
     //unset($event1);
     //unset($_POST);
-    //unset($_GET);
+    unset($_GET);
     //unset($_COOKIE);
     //unset($_SERVER);
     date_default_timezone_set(get_timezone($_COOKIE['timezone']));
@@ -129,7 +129,9 @@ function main_handler($event, $context)
 
     if (!$oauth['refresh_token']) $oauth['refresh_token'] = getenv('t1').getenv('t2').getenv('t3').getenv('t4').getenv('t5').getenv('t6').getenv('t7');
     if (!$oauth['refresh_token']) {
-	    echo substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'<br>
+	    echo 'REQUEST_URI:'.$_SERVER['REQUEST_URI'].'<br>
+REDIRECT_URL:'.$_SERVER['REDIRECT_URL'].'<br>
+getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'<br>
 '.json_encode($_GET, JSON_PRETTY_PRINT);
         if ($_GET['authorization_code'] && isset($_GET['code'])) {
             return message(get_refresh_token($_GET['code']));
