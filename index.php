@@ -79,7 +79,7 @@ function main_handler($event, $context)
     //if (strlen(json_encode($event1['body']))>500) $event1['body']=substr($event1['body'],0,strpos($event1['body'],'base64')+10) . '...Too Long!...' . substr($event1['body'],-50);
     //echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . ' ' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . ' ';
     //unset($event1);
-	echo '<pre>'.json_encode($_GET, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
+	//echo '<pre>'.json_encode($_GET, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
     //unset($_POST);
     unset($_GET);
     //unset($_COOKIE);
@@ -123,6 +123,7 @@ function main_handler($event, $context)
     $config['is_imgup_path'] = 0;
     if (path_format('/'.path_format(urldecode($config['list_path'].path_format($path))).'/')==path_format('/'.path_format($config['imgup_path']).'/')&&$config['imgup_path']!='') $config['is_imgup_path'] = 1;
     $_GET = $event['queryString'];
+	echo '<pre>'.json_encode($_GET, JSON_PRETTY_PRINT).'</pre>';
     $_SERVER['PHP_SELF'] = path_format($config['base_path'] . $path);
     $_SERVER['REMOTE_ADDR'] = $event['requestContext']['sourceIp'];
     /*$_POSTbody = explode("&",$event['body']);
