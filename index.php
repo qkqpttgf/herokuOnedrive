@@ -78,7 +78,7 @@ function main_handler($event, $context)
     //if (strlen(json_encode($event1['body']))>500) $event1['body']=substr($event1['body'],0,strpos($event1['body'],'base64')+10) . '...Too Long!...' . substr($event1['body'],-50);
     //echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . ' ' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . ' ';
     //unset($event1);
-	echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
+	//echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
     //unset($_POST);
     unset($_GET);
     //unset($_COOKIE);
@@ -445,7 +445,7 @@ function adminform($name = '', $pass = '', $path = '')
 function bigfileupload($path)
 {
     global $config;
-	echo 'bigfile,path:'.$path;
+	//echo 'bigfile,path:'.$path;
     $path1 = path_format($config['list_path'] . path_format($path));
     if (substr($path1,-1)=='/') $path1=substr($path1,0,-1);
     if ($_GET['upbigfilename']!=''&&$_GET['filesize']>0) {
@@ -614,8 +614,7 @@ function MSAPI($method, $path, $data = '', $access_token)
     $response['body'] = curl_exec($ch);
     $response['stat'] = curl_getinfo($ch,CURLINFO_HTTP_CODE);
     curl_close($ch);
-    echo $response['stat'].'
-';
+    //echo $response['stat'].'';
     return $response;
 }
 
