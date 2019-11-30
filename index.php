@@ -108,7 +108,7 @@ function main_handler($event, $context)
         $config['list_path'] = $public_path;
         $path = substr($event['path'], strlen('/'.$function_name.'/'));
     } else {
-        $config['base_path'] = $event['requestContext']['path'];
+        $config['base_path'] = '/';// $event['requestContext']['path'];
         $config['list_path'] = $private_path;
         $path = substr($event['path'], strlen($event['requestContext']['path']));
     }
