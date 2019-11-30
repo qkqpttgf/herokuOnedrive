@@ -78,7 +78,7 @@ function main_handler($event, $context)
     //if (strlen(json_encode($event1['body']))>500) $event1['body']=substr($event1['body'],0,strpos($event1['body'],'base64')+10) . '...Too Long!...' . substr($event1['body'],-50);
     //echo urldecode(json_encode($event1, JSON_PRETTY_PRINT)) . ' ' . urldecode(json_encode($context, JSON_PRETTY_PRINT)) . ' ';
     //unset($event1);
-	echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
+	//echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
     //unset($_POST);
     unset($_GET);
     //unset($_COOKIE);
@@ -335,6 +335,7 @@ function fetch_files_children($files, $path, $page, $cache)
 
 function list_files($path)
 {
+	echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
     global $oauth;
     global $config;
     $is_preview = false;
