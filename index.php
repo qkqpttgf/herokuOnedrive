@@ -1064,8 +1064,8 @@ function render_list($path, $files)
                 <form id="create_form" onsubmit="return submit_operate('create');">
                 <input id="create_sid" name="create_sid" type="hidden" value="">
                 <input id="create_hidden" type="hidden" value="">
-                　　　<input id="create_type_folder" name="create_type" type="radio" value="folder" onclick="document.getElementById('create_text_div').style.display='none';">文件夹
-                <input id="create_type_file" name="create_type" type="radio" value="file" onclick="document.getElementById('create_text_div').style.display='';" checked>文件<br>
+                　　　<label><input id="create_type_folder" name="create_type" type="radio" value="folder" onclick="document.getElementById('create_text_div').style.display='none';">文件夹</label>
+                <label><input id="create_type_file" name="create_type" type="radio" value="file" onclick="document.getElementById('create_text_div').style.display='';" checked>文件</label><br>
                 名字：<input id="create_input" name="create_name" type="text" value=""><br>
                 <div id="create_text_div">内容：<textarea id="create_text" name="create_text" rows="6" cols="40"></textarea><br></div>
                 <input name="operate_action" type="submit" value="新建">
