@@ -192,7 +192,7 @@ getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'
     if ($event['headers']['x-requested-with']=='XMLHttpRequest') {
         $config['ajax']=1;
     }
-
+	$config['retry']=0;
     return list_files($path);
 }
 
@@ -414,7 +414,8 @@ function list_files($path)
         return render_list($path, $files);
     } elseif (!isset($files['Error'])) {
         echo 'Error $files' . json_encode($files, JSON_PRETTY_PRINT);
-        return list_files($path);
+	    $config['retry']++;
+        if ($config['retry']<3) return list_files($path);
     }
 }
 
