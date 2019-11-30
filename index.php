@@ -375,7 +375,7 @@ function list_files($path)
             return output($tmp['body'],$tmp['stat']);
         }
 	    //echo 'action:'.$_POST['action'];
-        if ($_POST['action']=='upbigfile') return bigfileupload($path);
+        if ($_GET['action']=='upbigfile') return bigfileupload($path);
     }
     if ($config['admin']) {
         $tmp = adminoperate($path);
@@ -448,10 +448,10 @@ function bigfileupload($path)
 	echo 'bigfile,path:'.$path;
     $path1 = path_format($config['list_path'] . path_format($path));
     if (substr($path1,-1)=='/') $path1=substr($path1,0,-1);
-    if ($_POST['upbigfilename']!=''&&$_POST['filesize']>0) {
-        $fileinfo['name'] = $_POST['upbigfilename'];
-        $fileinfo['size'] = $_POST['filesize'];
-        $fileinfo['lastModified'] = $_POST['lastModified'];
+    if ($_GET['upbigfilename']!=''&&$_GET['filesize']>0) {
+        $fileinfo['name'] = $_GET['upbigfilename'];
+        $fileinfo['size'] = $_GET['filesize'];
+        $fileinfo['lastModified'] = $_GET['lastModified'];
         $filename = spurlencode( $fileinfo['name'] );
         $cachefilename = '.' . $fileinfo['lastModified'] . '_' . $fileinfo['size'] . '_' . $filename . '.tmp';
         $getoldupinfo=fetch_files(path_format($path . '/' . $cachefilename));
