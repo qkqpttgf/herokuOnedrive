@@ -1381,10 +1381,10 @@ function render_list($path, $files)
                 return;
             }
             var xhr1 = new XMLHttpRequest();
-            xhr1.setRequestHeader('x-requested-with','XMLHttpRequest');
 			actstr = 'action=upbigfile&upbigfilename='+ encodeURIComponent(file.name) +'&filesize='+ file.size +'&lastModified='+ file.lastModified;
 			console.log(actstr);
 		xhr1.open("GET", '?'+actstr);
+		xhr1.setRequestHeader('x-requested-with','XMLHttpRequest');
             xhr1.send(null);
             xhr1.onload = function(e){
                 td2.innerHTML='<font color="red">'+xhr1.responseText+'</font>';
