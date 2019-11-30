@@ -46,7 +46,7 @@ if ($context['request_id']=='') {
 		'x-requested-with' => $_SERVER['HTTP_X_REQUESTED_WITH'],
 	];
 	if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
-	else $_SERVER['REDIRECT_URL']=urlencode($_SERVER['REDIRECT_URL']);
+	else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
 	$event['path'] = $_SERVER['REDIRECT_URL'];
 	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?'));
 	$getstrarr = explode("&",$getstr);
