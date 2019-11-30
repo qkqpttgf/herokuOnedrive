@@ -48,7 +48,8 @@ if ($context['request_id']=='') {
 	if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
 	else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
 	$event['path'] = $_SERVER['REDIRECT_URL'];
-	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?'));
+	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL']));
+	while (substr($getstr,0,1)=='/' ||substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
 	$getstrarr = explode("&",$getstr);
     foreach ($getstrarr as $getvalues) {
         $pos = strpos($getvalues,"=");
