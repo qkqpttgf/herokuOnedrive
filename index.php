@@ -122,7 +122,7 @@ function main_handler($event, $context)
     $config['is_imgup_path'] = 0;
     if (path_format('/'.path_format(urldecode($config['list_path'].path_format($path))).'/')==path_format('/'.path_format($config['imgup_path']).'/')&&$config['imgup_path']!='') $config['is_imgup_path'] = 1;
     $_GET = $event['queryString'];
-    //$_SERVER['PHP_SELF'] = path_format($config['base_path'] . $path);
+    $_SERVER['PHP_SELF'] = path_format($config['base_path'] . $path);
     $_SERVER['REMOTE_ADDR'] = $event['requestContext']['sourceIp'];
     /*$_POSTbody = explode("&",$event['body']);
     foreach ($_POSTbody as $postvalues) {
@@ -335,7 +335,7 @@ function fetch_files_children($files, $path, $page, $cache)
 
 function list_files($path)
 {
-	echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
+	//echo '<pre>'.json_encode($_POST, JSON_PRETTY_PRINT).json_encode($_SERVER, JSON_PRETTY_PRINT).'</pre>';
     global $oauth;
     global $config;
     $is_preview = false;
