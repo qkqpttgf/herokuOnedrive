@@ -185,7 +185,6 @@ getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'
     }
 
     $config['ajax']=0;
-	echo $event['headers']['x-requested-with'];
     if ($event['headers']['x-requested-with']=='XMLHttpRequest') {
         $config['ajax']=1;
     }
@@ -356,7 +355,7 @@ function list_files($path)
         $config['access_token'] = $access_token;
         //$cache->save('access_token', $config['access_token'], $ret['expires_in'] - 60);
     //}
-
+echo 'ajax:'.$config['ajax'];
     if ($config['ajax']) {
         if ($_POST['action']=='del_upload_cache'&&substr($_POST['filename'],-4)=='.tmp') {
         // 无需登录即可删除.tmp后缀文件
