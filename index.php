@@ -356,7 +356,7 @@ function list_files($path)
         $config['access_token'] = $access_token;
         //$cache->save('access_token', $config['access_token'], $ret['expires_in'] - 60);
     //}
-echo 'ajax:'.$config['ajax'];
+//echo 'ajax:'.$config['ajax'];
     if ($config['ajax']) {
         if ($_POST['action']=='del_upload_cache'&&substr($_POST['filename'],-4)=='.tmp') {
         // 无需登录即可删除.tmp后缀文件
@@ -374,7 +374,7 @@ echo 'ajax:'.$config['ajax'];
             if ($tmp['stat']==409) echo MSAPI('DELETE',$oldname,'',$access_token)['body'];
             return output($tmp['body'],$tmp['stat']);
         }
-	    echo 'action:'.$_POST['action'];
+	    //echo 'action:'.$_POST['action'];
         if ($_POST['action']=='upbigfile') return bigfileupload($path);
     }
     if ($config['admin']) {
@@ -1381,7 +1381,7 @@ function render_list($path, $files)
                 return;
             }
             var xhr1 = new XMLHttpRequest();
-            xhr1.open("POST", '');
+            xhr1.open("GET", '');
             xhr1.setRequestHeader('x-requested-with','XMLHttpRequest');
 			actstr = 'action=upbigfile&upbigfilename='+ encodeURIComponent(file.name) +'&filesize='+ file.size +'&lastModified='+ file.lastModified;
 			console.log(actstr);
