@@ -479,42 +479,42 @@ function adminoperate($path)
     $path1 = path_format($config['list_path'] . path_format($path));
     if (substr($path1,-1)=='/') $path1=substr($path1,0,-1);
     $tmparr['statusCode'] = 0;
-    if ($_POST['rename_newname']!=$_POST['rename_oldname'] && $_POST['rename_newname']!='') {
+    if ($_GET['rename_newname']!=$_GET['rename_oldname'] && $_GET['rename_newname']!='') {
         // 重命名
-        $oldname = spurlencode($_POST['rename_oldname']);
+        $oldname = spurlencode($_GET['rename_oldname']);
         $oldname = path_format($path1 . '/' . $oldname);
-        $data = '{"name":"' . $_POST['rename_newname'] . '"}';
+        $data = '{"name":"' . $_GET['rename_newname'] . '"}';
                 //echo $oldname;
         $result = MSAPI('PATCH',$oldname,$data,$config['access_token']);
         return output($result['body'], $result['stat']);
     }
-    if ($_POST['delete_name']!='') {
+    if ($_GET['delete_name']!='') {
         // 删除
-        $filename = spurlencode($_POST['delete_name']);
+        $filename = spurlencode($_GET['delete_name']);
         $filename = path_format($path1 . '/' . $filename);
                 //echo $filename;
         $result = MSAPI('DELETE', $filename, '', $config['access_token']);
         return output($result['body'], $result['stat']);
     }
-    if ($_POST['operate_action']=='加密') {
+    if ($_GET['operate_action']=='加密') {
         // 加密
         if ($config['passfile']=='') return message('先在环境变量设置passfile才能加密','',403);
-        if ($_POST['encrypt_folder']=='/') $_POST['encrypt_folder']=='';
-        $foldername = spurlencode($_POST['encrypt_folder']);
+        if ($_GET['encrypt_folder']=='/') $_GET['encrypt_folder']=='';
+        $foldername = spurlencode($_GET['encrypt_folder']);
         $filename = path_format($path1 . '/' . $foldername . '/' . $config['passfile']);
                 //echo $foldername;
-        $result = MSAPI('PUT', $filename, $_POST['encrypt_newpass'], $config['access_token']);
+        $result = MSAPI('PUT', $filename, $_GET['encrypt_newpass'], $config['access_token']);
         return output($result['body'], $result['stat']);
     }
-    if ($_POST['move_folder']!='') {
+    if ($_GET['move_folder']!='') {
         // 移动
         $moveable = 1;
-        if ($path == '/' && $_POST['move_folder'] == '/../') $moveable=0;
-        if ($_POST['move_folder'] == $_POST['move_name']) $moveable=0;
+        if ($path == '/' && $_GET['move_folder'] == '/../') $moveable=0;
+        if ($_GET['move_folder'] == $_GET['move_name']) $moveable=0;
         if ($moveable) {
-            $filename = spurlencode($_POST['move_name']);
+            $filename = spurlencode($_GET['move_name']);
             $filename = path_format($path1 . '/' . $filename);
-            $foldername = path_format('/'.urldecode($path1).'/'.$_POST['move_folder']);
+            $foldername = path_format('/'.urldecode($path1).'/'.$_GET['move_folder']);
             $data = '{"parentReference":{"path": "/drive/root:'.$foldername.'"}}';
             $result = MSAPI('PATCH', $filename, $data, $config['access_token']);
             return output($result['body'], $result['stat']);
@@ -535,15 +535,15 @@ function adminoperate($path)
         $resultarry = json_decode($result,true);
         if (isset($resultarry['error'])) return message($resultarry['error']['message']. '<hr><a href="javascript:history.back(-1)">上一页</a>','错误',403);
     }
-    if ($_POST['create_name']!='') {
+    if ($_GET['create_name']!='') {
         // 新建
-        if ($_POST['create_type']=='file') {
-            $filename = spurlencode($_POST['create_name']);
+        if ($_GET['create_type']=='file') {
+            $filename = spurlencode($_GET['create_name']);
             $filename = path_format($path1 . '/' . $filename);
-            $result = MSAPI('PUT', $filename, $_POST['create_text'], $config['access_token']);
+            $result = MSAPI('PUT', $filename, $_GET['create_text'], $config['access_token']);
         }
-        if ($_POST['create_type']=='folder') {
-            $data = '{ "name": "' . $_POST['create_name'] . '",  "folder": { },  "@microsoft.graph.conflictBehavior": "rename" }';
+        if ($_GET['create_type']=='folder') {
+            $data = '{ "name": "' . $_GET['create_name'] . '",  "folder": { },  "@microsoft.graph.conflictBehavior": "rename" }';
             $result = MSAPI('children', $path1, $data, $config['access_token']);
         }
         return output($result['body'], $result['stat']);
@@ -1613,9 +1613,9 @@ function render_list($path, $files)
     function submit_operate(str) {
         var num=document.getElementById(str+'_sid').value;
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", '', true);
+        xhr.open("GET", '?'+serializeForm(str+'_form'));
         xhr.setRequestHeader('x-requested-with','XMLHttpRequest');
-        xhr.send(serializeForm(str+'_form'));
+        xhr.send(null);
         xhr.onload = function(e){
             var html;
             if (xhr.status<300) {
