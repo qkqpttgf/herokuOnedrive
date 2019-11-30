@@ -407,7 +407,12 @@ function list_files($path)
             return output('', 302, [ 'Location' => $files['@microsoft.graph.downloadUrl'] ]);
         }
     }
-    return render_list($path, $files);
+    if ( isset($files['folder']) || isset($files['file']) ) {
+        return render_list($path, $files);
+    } elseif (!isset($files['Error'])) {
+        echo 'Error $files' . json_encode($files, JSON_PRETTY_PRINT);
+        return list_files($path);
+    }
 }
 
 function adminform($name = '', $pass = '', $path = '')
