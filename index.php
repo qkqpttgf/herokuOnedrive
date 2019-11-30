@@ -358,17 +358,17 @@ function list_files($path)
     //}
 //echo 'ajax:'.$config['ajax'];
     if ($config['ajax']) {
-        if ($_POST['action']=='del_upload_cache'&&substr($_POST['filename'],-4)=='.tmp') {
+        if ($_GET['action']=='del_upload_cache'&&substr($_GET['filename'],-4)=='.tmp') {
         // 无需登录即可删除.tmp后缀文件
-            $tmp = MSAPI('DELETE',path_format(path_format($config['list_path'] . path_format($path)) . '/' . spurlencode($_POST['filename']) ),'',$access_token);
+            $tmp = MSAPI('DELETE',path_format(path_format($config['list_path'] . path_format($path)) . '/' . spurlencode($_GET['filename']) ),'',$access_token);
             return output($tmp['body'],$tmp['stat']);
         }
-        if ($_POST['action']=='uploaded_rename') {
+        if ($_GET['action']=='uploaded_rename') {
         // 无需登录即可重命名.scfupload后缀文件，filemd5为用户提交，可被构造，问题不大，以后处理
-            $oldname = spurlencode($_POST['filename']);
+            $oldname = spurlencode($_GET['filename']);
             $ext = strtolower(substr($oldname, strrpos($oldname, '.')));
             $oldname = path_format(path_format($config['list_path'] . path_format($path)) . '/' . $oldname . '.scfupload' );
-            $data = '{"name":"' . $_POST['filemd5'] . $ext . '"}';
+            $data = '{"name":"' . $_GET['filemd5'] . $ext . '"}';
             //echo $oldname .'<br>'. $data;
             $tmp = MSAPI('PATCH',$oldname,$data,$config['access_token']);
             if ($tmp['stat']==409) echo MSAPI('DELETE',$oldname,'',$access_token)['body'];
