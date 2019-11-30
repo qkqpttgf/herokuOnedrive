@@ -378,7 +378,7 @@ function list_files($path)
             if ($tmp['stat']==409) echo MSAPI('DELETE',$oldname,'',$access_token)['body'];
             return output($tmp['body'],$tmp['stat']);
         }
-	    echo 'action:'.$_GET['action'];
+	    //echo 'action:'.$_GET['action'];
         if ($_GET['action']=='upbigfile') return bigfileupload($path);
     }
     if ($config['admin']) {
