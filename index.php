@@ -351,7 +351,7 @@ function list_files($path)
     $path = path_format($path);
     $cache = null;
     $cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir(), '.qdrive');
-    if (!($access_token = $cache->fetch('access_token'))) {
+    if (!($config['access_token'] = $cache->fetch('access_token'))) {
         $ret = json_decode(curl_request(
             $oauth['oauth_url'] . 'token',
             'client_id='. $oauth['client_id'] .'&client_secret='. $oauth['client_secret'] .'&grant_type=refresh_token&requested_token_use=on_behalf_of&refresh_token=' . $oauth['refresh_token']
@@ -360,8 +360,8 @@ function list_files($path)
             error_log('failed to get access_token. response' . json_encode($ret));
             throw new Exception('failed to get access_token.');
         }
-        $access_token = $ret['access_token'];
-        $config['access_token'] = $access_token;
+        $config['access_token'] = $ret['access_token'];
+        $access_token = $config['access_token'];
         $cache->save('access_token', $config['access_token'], $ret['expires_in'] - 60);
     }
 //echo 'ajax:'.$config['ajax'];
