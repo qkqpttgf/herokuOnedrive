@@ -73,7 +73,7 @@ if ($context['request_id']=='') {
 
 function main_handler($event, $context)
 {
-	file_put_contents('a.txt', time());
+	file_put_contents('a.txt', time(), FILE_APPEND);
 	echo file_get_contents('a.txt');
     global $oauth;
     global $config;
@@ -415,7 +415,7 @@ function list_files($path)
     }
     if ( isset($files['folder']) || isset($files['file']) ) {
         return render_list($path, $files);
-    } elseif (!isset($files['Error'])) {
+    } elseif (!isset($files['error'])) {
         echo 'Error $files' . json_encode($files, JSON_PRETTY_PRINT);
 	    $config['retry']++;
         if ($config['retry']<3) return list_files($path);
