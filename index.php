@@ -779,22 +779,6 @@ function render_list($path, $files)
                 </a>
 <?php } ?>
                 <h3 class="table-header"><?php echo str_replace('%23', '#', str_replace('&','&amp;', $path)); ?></h3>
-                <div class="login">
-<?php
-    if (getenv('admin')!='') if (!$config['admin']) {
-        if (getenv('adminloginpage')=='') { ?>
-                    <a onclick="login();">登录</a>
-<?php   }
-    } else { ?>
-                    <li class="operate">管理<ul style="margin:-17px 0 0 -66px;">
-                    <li><a onclick="logout()">登出</a></li>
-<?php   if (isset($files['folder'])) { ?>
-                    <li><a onclick="showdiv(event,'create','');">新建</a></li>
-                    <li><a onclick="showdiv(event,'encrypt','');">加密</a></li>
-                    </ul></li>
-<?php   }
-    } ?>
-                </div>
             </div>
             <div class="list-body-container">
 <?php
@@ -915,7 +899,6 @@ function render_list($path, $files)
                     <tr data-to id="tr<?php echo $filenum;?>">
                         <!--<td class="updated_at"><?php echo $filenum;?></td>-->
                         <td class="file">
-                            <ion-icon name="document"></ion-icon>
 <?php                           if ($config['admin']) { ?>
                             <li class="operate">管理
                             <ul>
@@ -925,6 +908,7 @@ function render_list($path, $files)
                             </ul>
                             </li>&nbsp;&nbsp;&nbsp;
 <?php                           } ?>
+                            <ion-icon name="document"></ion-icon>
                             <a id="file_a<?php echo $filenum;?>" name="filelist" href="<?php echo path_format($config['base_path'] . '/' . $path . '/' . encode_str_replace($file['name'])); ?>?preview" target=_blank><?php echo str_replace('&','&amp;', $file['name']); ?></a>
                             <a href="<?php echo path_format($config['base_path'] . '/' . $path . '/' . str_replace('&','&amp;', $file['name']));?>"><ion-icon name="download"></ion-icon></a>
                         </td>
