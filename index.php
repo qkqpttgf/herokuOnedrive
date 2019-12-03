@@ -17,7 +17,7 @@ passfile       ：自定义密码文件的名字，可以是'pppppp'，也可以
         　       密码是这个文件的内容，可以空格、可以中文；列目录时不会显示，只有知道密码才能查看或下载此文件。  
 refresh_token  ：把refresh_token放在环境变量，方便更新版本。  
 */
-//include 'vendor/autoload.php';
+include 'vendor/autoload.php';
 include 'functions.php';
 global $oauth;
 global $config;
