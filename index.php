@@ -73,9 +73,9 @@ if ($context['request_id']=='') {
 
 function main_handler($event, $context)
 {
-	file_put_contents('a.txt', time() . '
+	//file_put_contents('a.txt', time() . '
 ', FILE_APPEND);
-	echo file_get_contents('a.txt');
+	//echo file_get_contents('a.txt');
     global $oauth;
     global $config;
     $event = json_decode(json_encode($event), true);
@@ -206,9 +206,9 @@ function fetch_files($path = '/')
     global $config;
     $path1 = path_format($path);
     $path = path_format($config['list_path'] . path_format($path));
-    //$cache = null;
-    //$cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir(), '.qdrive');
-    //if (!($files = $cache->fetch('path_' . $path))) {
+    $cache = null;
+    $cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir(), '.qdrive');
+    if (!($files = $cache->fetch('path_' . $path))) {
 
         // https://docs.microsoft.com/en-us/graph/api/driveitem-get?view=graph-rest-1.0
         // https://docs.microsoft.com/zh-cn/graph/api/driveitem-put-content?view=graph-rest-1.0&tabs=http
@@ -230,10 +230,10 @@ function fetch_files($path = '/')
                 $files=fetch_files_children($files, $path, $page, $cache);
             } else {
                 // files num < 200 , then cache
-                //$cache->save('path_' . $path, $files, 60);
+                $cache->save('path_' . $path, $files, 60);
             }
         }
-    //}
+    }
     return $files;
 }
 
@@ -349,9 +349,9 @@ function list_files($path)
     $is_preview = false;
     if ($_GET['preview']) $is_preview = true;
     $path = path_format($path);
-    //$cache = null;
-    //$cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir(), '.qdrive');
-    //if (!($access_token = $cache->fetch('access_token'))) {
+    $cache = null;
+    $cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir(), '.qdrive');
+    if (!($access_token = $cache->fetch('access_token'))) {
         $ret = json_decode(curl_request(
             $oauth['oauth_url'] . 'token',
             'client_id='. $oauth['client_id'] .'&client_secret='. $oauth['client_secret'] .'&grant_type=refresh_token&requested_token_use=on_behalf_of&refresh_token=' . $oauth['refresh_token']
@@ -362,8 +362,8 @@ function list_files($path)
         }
         $access_token = $ret['access_token'];
         $config['access_token'] = $access_token;
-        //$cache->save('access_token', $config['access_token'], $ret['expires_in'] - 60);
-    //}
+        $cache->save('access_token', $config['access_token'], $ret['expires_in'] - 60);
+    }
 //echo 'ajax:'.$config['ajax'];
     if ($config['ajax']) {
         if ($_GET['action']=='del_upload_cache'&&substr($_GET['filename'],-4)=='.tmp') {
@@ -389,7 +389,7 @@ function list_files($path)
         $tmp = adminoperate($path);
         if ($tmp['statusCode'] > 0) {
             $path1 = path_format($config['list_path'] . path_format($path));
-            //$cache->save('path_' . $path1, json_decode('{}',true), 1);
+            $cache->save('path_' . $path1, json_decode('{}',true), 1);
             return $tmp;
         }
     } else {
