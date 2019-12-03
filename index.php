@@ -361,9 +361,9 @@ function list_files($path)
             throw new Exception('failed to get access_token.');
         }
         $config['access_token'] = $ret['access_token'];
-        $access_token = $config['access_token'];
         $cache->save('access_token', $config['access_token'], $ret['expires_in'] - 60);
     }
+	$access_token = $config['access_token'];
 //echo 'ajax:'.$config['ajax'];
     if ($config['ajax']) {
         if ($_GET['action']=='del_upload_cache'&&substr($_GET['filename'],-4)=='.tmp') {
