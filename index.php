@@ -23,11 +23,12 @@ global $oauth;
 global $config;
 $oauth='';
 $config='';
+if (!function_exists('getenv')) {
 function getenv($str)
 {
 	return $_SERVER[$str];
 }
-
+}
 $oauth = [
     'onedrive_ver' => 0, // 0:默认（支持商业版与个人版） 1:世纪互联
     'redirect_uri' => 'https://scfonedrive.github.io',
