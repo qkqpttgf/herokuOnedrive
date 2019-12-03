@@ -1,7 +1,7 @@
 <?php
 /*
-    帖子 ： https://www.hostloc.com/thread-561971-1-1.html
-    github ： https://github.com/qkqpttgf/OneDrive_SCF
+    帖子 ： https://www.hostloc.com/thread-617698-1-1.html
+    github ： https://github.com/qkqpttgf/herokuOnedrive
 */
 //有选择地添加以下某些环境变量来做设置：
 /*
