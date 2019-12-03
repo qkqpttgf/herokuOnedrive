@@ -73,9 +73,9 @@ if ($context['request_id']=='') {
 
 function main_handler($event, $context)
 {
-	//file_put_contents('a.txt', time() . '
+	/*file_put_contents('a.txt', time() . '
 ', FILE_APPEND);
-	//echo file_get_contents('a.txt');
+	echo file_get_contents('a.txt');*/
     global $oauth;
     global $config;
     $event = json_decode(json_encode($event), true);
