@@ -40,7 +40,7 @@ $config = [
     'imgup_path' => getenv('imgup_path'),
 ];
 
-if ($context['request_id']=='') {
+if ($_SERVER['USER']!='qcloud') {
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
