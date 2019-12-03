@@ -415,11 +415,13 @@ function list_files($path)
     }
     if ( isset($files['folder']) || isset($files['file']) ) {
         return render_list($path, $files);
-    } elseif (!isset($files['error'])) {
+    } elseif (isset($files['error'])) {
+	    return output('<div style="margin:8px;">' . $files['error']['message'] . '</div>', 404);
+    } else {
         echo 'Error $files' . json_encode($files, JSON_PRETTY_PRINT);
 	    $config['retry']++;
         if ($config['retry']<3) return list_files($path);
-    }
+    } 
 }
 
 function adminform($name = '', $pass = '', $path = '')
