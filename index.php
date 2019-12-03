@@ -704,13 +704,12 @@ function render_list($path, $files)
         a:hover{color:#24292e}
         .title{text-align:center;margin-top:2rem;letter-spacing:2px;margin-bottom:2rem}
         .title a{color:#333;text-decoration:none}
-        .list-wrapper{width:80%;margin:0 auto 40px;position:relative;box-shadow:0 0 32px 0 rgba(0,0,0,.1)}
-        .list-container{position:relative;overflow:hidden}
+        .list-wrapper{width:80%;margin:0 auto 40px;position:relative;box-shadow:0 0 32px 0 rgb(128,128,128);border-radius:15px;}
+        .list-container{position:relative;overflow:hidden;border-radius:15px;}
         .list-header-container{position:relative}
         .list-header-container a.back-link{color:#000;display:inline-block;position:absolute;font-size:16px;margin:20px 10px;padding:10px 10px;vertical-align:middle;text-decoration:none}
         .list-container,.list-header-container,.list-wrapper,a.back-link:hover,body{color:#24292e}
         .list-header-container .table-header{margin:0;border:0 none;padding:30px 60px;text-align:left;font-weight:400;color:#000;background-color:#f7f7f9}
-        .login{display: inline-table;position: absolute;font-size:16px;padding:30px 20px;vertical-align:middle;right:0px;top:0px}
         .list-body-container{position:relative;left:0;overflow-x:hidden;overflow-y:auto;box-sizing:border-box;background:#fff}
         .list-table{width:100%;padding:20px;border-spacing:0}
         .list-table tr{height:40px}
@@ -719,26 +718,44 @@ function render_list($path, $files)
         .list-table td,.list-table th{padding:0 10px;text-align:left}
         .list-table .size,.list-table .updated_at{text-align:right}
         .list-table .file ion-icon{font-size:15px;margin-right:5px;vertical-align:bottom}
-<?php if ($config['admin']) { ?>
-        .operate{display: inline-table;margin:0;list-style:none;}
-        .operate ul{position: absolute;display: none;background: #fff;border:1px #f7f7f7 solid;border-radius: 5px;margin:-17px 0 0 0;padding: 0;color:#205D67;}
-        .operate:hover ul{position: absolute;display:inline-table;}
-        .operate ul li{padding:1px;list-style:none;}
-        .operatediv_close{position: absolute;right: 3px;top:3px;}
+        .mask{position:absolute;left:0px;top:0px;width:100%;background-color:#000;filter:alpha(opacity=50);opacity:0.5;z-index:2;}
+<?php if ($_SERVER['admin']) { ?>
+        .operate{display:inline-table;margin:0;list-style:none;}
+        .operate ul{position:absolute;display:none;background:#fffaaa;border:0px #f7f7f7 solid;border-radius:5px;margin:-7px 0 0 0;padding:0 7px;color:#205D67;z-index:1;}
+        .operate:hover ul{position:absolute;display:inline-table;}
+        .operate ul li{padding:7px;list-style:none;display:inline-table;}
 <?php } ?>
-        .readme{padding:8px;background-color: #fff;}
-        #readme{padding: 20px;text-align: left}
+        .operatediv{position:absolute;border:1px #CCCCCC;background-color:#FFFFCC;z-index:2;}
+        .operatediv div{margin:16px}
+        .operatediv_close{position:absolute;right:3px;top:3px;}
+        .readme{padding:8px;background-color:#fff;}
+        #readme{padding:20px;text-align:left}
 
         @media only screen and (max-width:480px){
-            .title{margin-bottom: 24px}
+            .title{margin-bottom:24px}
             .list-wrapper{width:95%; margin-bottom:24px;}
-            .list-table {padding: 8px}
+            .list-table {padding:8px}
             .list-table td, .list-table th{padding:0 10px;text-align:left;white-space:nowrap;overflow:auto;max-width:80px}
         }
     </style>
 </head>
 
 <body>
+<?php
+    if (getenv('admin')!='') if (!$_SERVER['admin']) {
+        if (getenv('adminloginpage')=='') { ?>
+    <a onclick="login();">登录</a>
+<?php   }
+    } else { ?>
+    <li class="operate">管理<ul>
+<?php   if (isset($files['folder'])) { ?>
+        <li><a onclick="showdiv(event,'create','');">新建</a></li>
+        <li><a onclick="showdiv(event,'encrypt','');">加密</a></li>
+<?php   } ?>
+        <li><a onclick="logout()">登出</a></li>
+    </ul></li>
+<?php
+    } ?>
     <h1 class="title">
         <a href="<?php echo $config['base_path']; ?>"><?php echo $config['sitename'] ;?></a>
     </h1>
@@ -808,11 +825,11 @@ function render_list($path, $files)
                         echo '
                         <img src="' . $files['@microsoft.graph.downloadUrl'] . '" alt="' . substr($path, strrpos($path, '/')) . '" onload="if(this.offsetWidth>document.getElementById(\'url\').offsetWidth) this.style.width=\'100%\';" />
 ';
-                    } elseif (in_array($ext, ['mp4', 'mov', 'webm', 'mkv', 'flv', 'blv', 'avi', 'wmv', 'ogg'])) {
+                    } elseif (in_array($ext, ['mp4', 'mov', 'webm', 'mkv', 'flv', 'blv', 'avi', 'wmv'])) {
                     //echo '<video src="' . $files['@microsoft.graph.downloadUrl'] . '" controls="controls" style="width: 100%"></video>';
                         $DPvideo=$files['@microsoft.graph.downloadUrl'];
                         echo '<div id="video-a0"></div>';
-                    } elseif (in_array($ext, ['mp3', 'wma', 'flac', 'wav'])) {
+                    } elseif (in_array($ext, ['mp3', 'wma', 'flac', 'wav', 'ogg'])) {
                         echo '
                         <audio src="' . $files['@microsoft.graph.downloadUrl'] . '" controls="controls" style="width: 100%"></audio>
 ';
@@ -824,7 +841,7 @@ function render_list($path, $files)
                         echo '
                         <iframe id="office-a" src="https://view.officeapps.live.com/op/view.aspx?src=' . urlencode($files['@microsoft.graph.downloadUrl']) . '" style="width: 100%;height: 800px" frameborder="0"></iframe>
 ';
-                    } elseif (in_array($ext, ['txt', 'sh', 'bat', 'php', 'asp', 'js', 'html', 'c'])) {
+                    } elseif (in_array($ext, ['txt', 'sh', 'bat', 'php', 'asp', 'js', 'json', 'html', 'c'])) {
                         $txtstr = htmlspecialchars(curl_request($files['@microsoft.graph.downloadUrl']));
 ?>
                         <div id="txt">
@@ -867,7 +884,6 @@ function render_list($path, $files)
                     <tr data-to id="tr<?php echo $filenum;?>">
                         <!--<td class="updated_at"><?php echo $filenum;?></td>-->
                         <td class="file">
-                            <ion-icon name="folder"></ion-icon>
 <?php                       if ($config['admin']) { ?>
                             <li class="operate">管理
                             <ul>
@@ -878,6 +894,7 @@ function render_list($path, $files)
                             </ul>
                             </li>&nbsp;&nbsp;&nbsp;
 <?php                       } ?>
+                            <ion-icon name="folder"></ion-icon>
                             <a id="file_a<?php echo $filenum;?>" href="<?php echo path_format($config['base_path'] . '/' . $path . '/' . encode_str_replace($file['name']) . '/'); ?>"><?php echo str_replace('&','&amp;', $file['name']);?></a>
                         </td>
                         <td class="updated_at" id="folder_time<?php echo $filenum;?>"><?php echo time_format($file['lastModifiedDateTime']); ?></td>
