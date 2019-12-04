@@ -200,7 +200,7 @@ getstr:'.substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL'].'?')).'
         $config['ajax']=1;
     }
 	$config['retry']=0;
-    return list_files($path);
+    //return list_files($path);
 }
 
 function fetch_files($path = '/')
