@@ -345,7 +345,7 @@ function GetPathSetting($event, $context)
         $_SERVER['Region'] = substr($_SERVER['Region'], 0, strpos($_SERVER['Region'], '.'));
         $path = substr($event['path'], strlen('/'.$_SERVER['function_name'].'/'));
     } else {
-        $_SERVER['base_path'] = $event['requestContext']['path'];
+        $_SERVER['base_path'] = '/';//$event['requestContext']['path'];
         $_SERVER['list_path'] = $private_path;
         $_SERVER['Region'] = getenv('Region');
         $path = substr($event['path'], strlen($event['requestContext']['path']));
