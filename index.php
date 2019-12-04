@@ -15,7 +15,6 @@ include 'functions.php';
 //include 'scfapi.php';
 if ($_SERVER['USER']!='qcloud') {
 	if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
-	echo getenv('imgup_path');
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
