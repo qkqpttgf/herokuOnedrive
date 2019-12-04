@@ -3,17 +3,16 @@
     帖子 ： https://www.hostloc.com/thread-617698-1-1.html
     github ： https://github.com/qkqpttgf/herokuOnedrive
 */
-include 'vendor/autoload.php';
-include 'conststr.php';
-include 'functions.php';
-//include 'scfapi.php';
-
 if (!function_exists('getenv')) {
     function getenv($str)
     {
 	    return $_SERVER[$str];
     }
 }
+include 'vendor/autoload.php';
+include 'conststr.php';
+include 'functions.php';
+//include 'scfapi.php';
 if ($_SERVER['USER']!='qcloud') {
 	if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
 	echo getenv('imgup_path');
