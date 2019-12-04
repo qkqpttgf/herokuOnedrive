@@ -64,7 +64,7 @@ function time_format($ISO)
 function config_oauth()
 {
     global $oauth;
-    if ($oauth['onedrive_ver']==0) {
+    if ($oauth['onedrive_ver']=='MS') {
         // 0 默认（支持商业版与个人版）
         // https://portal.azure.com
         $oauth['client_id'] = '4da3e7f2-bf6d-467c-aaf0-578078f0bf7c';
@@ -73,7 +73,7 @@ function config_oauth()
         $oauth['api_url'] = 'https://graph.microsoft.com/v1.0/me/drive/root';
         $oauth['scope'] = 'https://graph.microsoft.com/Files.ReadWrite.All offline_access';
     }
-    if ($oauth['onedrive_ver']==1) {
+    if ($oauth['onedrive_ver']=='CN') {
         // 1 世纪互联
         // https://portal.azure.cn
         $oauth['client_id'] = '04c3ca0b-8d07-4773-85ad-98b037d25631';
