@@ -42,7 +42,7 @@ $config = [
 ];
 
 if ($_SERVER['USER']!='qcloud') {
-	if ($oauth['onedrive_ver']=='') $oauth['onedrive_ver']=='MS';
+	if ($oauth['onedrive_ver']=='') $oauth['onedrive_ver'] = 'MS';
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
