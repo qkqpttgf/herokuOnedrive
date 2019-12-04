@@ -5,6 +5,7 @@
 */
 //有选择地添加以下某些环境变量来做设置：
 /*
+onedrive_ver   ：默认MS是微软（支持商业版与个人版），改成CN是世纪互联。
 sitename       ：网站的名称，不添加会显示为‘请在环境变量添加sitename’。  
 admin          ：管理密码，不添加时不显示登录页面且无法登录。  
 adminloginpage ：管理登录的页面不再是'?admin'，而是此设置的值。如果设置，登录按钮及页面隐藏。  
@@ -30,7 +31,7 @@ function getenv($str)
 }
 }
 $oauth = [
-    'onedrive_ver' => 0, // 0:默认（支持商业版与个人版） 1:世纪互联
+    'onedrive_ver' => getenv('onedrive_ver'),
     'redirect_uri' => 'https://scfonedrive.github.io',
     'refresh_token' => '',
 ];
@@ -41,6 +42,7 @@ $config = [
 ];
 
 if ($_SERVER['USER']!='qcloud') {
+	if ($oauth['onedrive_ver']=='') $oauth['onedrive_ver']=='MS';
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
