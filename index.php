@@ -245,13 +245,14 @@ function list_files($path)
     $cache = null;
     $cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir(), '.qdrive');
     if (!($_SERVER['access_token'] = $cache->fetch('access_token'))) {
+	    echo 'client_id='. $_SERVER['client_id'] .'&client_secret='. $_SERVER['client_secret'] .'&grant_type=refresh_token&requested_token_use=on_behalf_of&refresh_token=' . $_SERVER['refresh_token'];
         $ret = json_decode(curl_request(
             $_SERVER['oauth_url'] . 'token',
             'client_id='. $_SERVER['client_id'] .'&client_secret='. $_SERVER['client_secret'] .'&grant_type=refresh_token&requested_token_use=on_behalf_of&refresh_token=' . $_SERVER['refresh_token']
         ), true);
         if (!isset($ret['access_token'])) {
             error_log('failed to get access_token. response' . json_encode($ret));
-            throw new Exception('failed to get access_token.');
+            //throw new Exception('failed to get access_token.');
         }
         $_SERVER['access_token'] = $ret['access_token'];
         $cache->save('access_token', $_SERVER['access_token'], $ret['expires_in'] - 60);
