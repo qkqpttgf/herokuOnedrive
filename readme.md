@@ -1,3 +1,6 @@
+# DEMO  
+https://herooneindex.herokuapp.com/  
+
 # 在Config Vars设置：  
 sitename       ：网站的名称，不添加会显示为‘请在环境变量添加sitename’。  
 admin          ：管理密码，不添加时不显示登录页面且无法登录。  
