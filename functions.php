@@ -9,8 +9,8 @@ function config_oauth()
     $_SERVER['sitename'] = getenv('sitename');
     if (empty($_SERVER['sitename'])) $_SERVER['sitename'] = $constStr['defaultSitename'][$constStr['language']];
     $_SERVER['redirect_uri'] = 'https://scfonedrive.github.io';
-echo 'Onedrive_ver'.getenv('Onedrive_ver').'<br>'.$_SERVER['Onedrive_ver'];
-    if (getenv('Onedrive_ver')=='MS') {
+
+    if ($_SERVER['Onedrive_ver']=='MS') {
         // MS
         // https://portal.azure.com
         $_SERVER['client_id'] = '4da3e7f2-bf6d-467c-aaf0-578078f0bf7c';
@@ -19,7 +19,7 @@ echo 'Onedrive_ver'.getenv('Onedrive_ver').'<br>'.$_SERVER['Onedrive_ver'];
         $_SERVER['api_url'] = 'https://graph.microsoft.com/v1.0/me/drive/root';
         $_SERVER['scope'] = 'https://graph.microsoft.com/Files.ReadWrite.All offline_access';
     }
-    if (getenv('Onedrive_ver')=='CN') {
+    if ($_SERVER['Onedrive_ver']=='CN') {
         // CN
         // https://portal.azure.cn
         $_SERVER['client_id'] = '04c3ca0b-8d07-4773-85ad-98b037d25631';
@@ -28,7 +28,7 @@ echo 'Onedrive_ver'.getenv('Onedrive_ver').'<br>'.$_SERVER['Onedrive_ver'];
         $_SERVER['api_url'] = 'https://microsoftgraph.chinacloudapi.cn/v1.0/me/drive/root';
         $_SERVER['scope'] = 'https://microsoftgraph.chinacloudapi.cn/Files.ReadWrite.All offline_access';
     }
-    if (getenv('Onedrive_ver')=='MSC') {
+    if ($_SERVER['Onedrive_ver']=='MSC') {
         // MS Customer
         // https://portal.azure.com
         $_SERVER['client_id'] = getenv('client_id');
