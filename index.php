@@ -258,24 +258,24 @@ function list_files($path)
     }
 
     if ($_SERVER['ajax']) {
-        if ($_POST['action']=='del_upload_cache'&&substr($_POST['filename'],-4)=='.tmp') {
+        if ($_GET['action']=='del_upload_cache'&&substr($_GET['filename'],-4)=='.tmp') {
             // del '.tmp' without login. 无需登录即可删除.tmp后缀文件
-            $tmp = MSAPI('DELETE',path_format(path_format($_SERVER['list_path'] . path_format($path)) . '/' . spurlencode($_POST['filename']) ),'',$_SERVER['access_token']);
+            $tmp = MSAPI('DELETE',path_format(path_format($_SERVER['list_path'] . path_format($path)) . '/' . spurlencode($_GET['filename']) ),'',$_SERVER['access_token']);
             return output($tmp['body'],$tmp['stat']);
         }
-        if ($_POST['action']=='uploaded_rename') {
+        if ($_GET['action']=='uploaded_rename') {
             // rename .scfupload file without login.
             // 无需登录即可重命名.scfupload后缀文件，filemd5为用户提交，可被构造，问题不大，以后处理
-            $oldname = spurlencode($_POST['filename']);
+            $oldname = spurlencode($_GET['filename']);
             $ext = strtolower(substr($oldname, strrpos($oldname, '.')));
             $oldname = path_format(path_format($_SERVER['list_path'] . path_format($path)) . '/' . $oldname . '.scfupload' );
-            $data = '{"name":"' . $_POST['filemd5'] . $ext . '"}';
+            $data = '{"name":"' . $_GET['filemd5'] . $ext . '"}';
             //echo $oldname .'<br>'. $data;
             $tmp = MSAPI('PATCH',$oldname,$data,$_SERVER['access_token']);
             if ($tmp['stat']==409) echo MSAPI('DELETE',$oldname,'',$_SERVER['access_token'])['body'];
             return output($tmp['body'],$tmp['stat']);
         }
-        if ($_POST['action']=='upbigfile') return bigfileupload($path);
+        if ($_GET['action']=='upbigfile') return bigfileupload($path);
     }
     if ($_SERVER['admin']) {
         $tmp = adminoperate($path);
@@ -354,10 +354,10 @@ function bigfileupload($path)
 {
     $path1 = path_format($_SERVER['list_path'] . path_format($path));
     if (substr($path1,-1)=='/') $path1=substr($path1,0,-1);
-    if ($_POST['upbigfilename']!=''&&$_POST['filesize']>0) {
-        $fileinfo['name'] = $_POST['upbigfilename'];
-        $fileinfo['size'] = $_POST['filesize'];
-        $fileinfo['lastModified'] = $_POST['lastModified'];
+    if ($_GET['upbigfilename']!=''&&$_GET['filesize']>0) {
+        $fileinfo['name'] = $_GET['upbigfilename'];
+        $fileinfo['size'] = $_GET['filesize'];
+        $fileinfo['lastModified'] = $_GET['lastModified'];
         $filename = spurlencode( $fileinfo['name'] );
         $cachefilename = '.' . $fileinfo['lastModified'] . '_' . $fileinfo['size'] . '_' . $filename . '.tmp';
         $getoldupinfo=fetch_files(path_format($path . '/' . $cachefilename));
@@ -385,42 +385,42 @@ function adminoperate($path)
     if (substr($path1,-1)=='/') $path1=substr($path1,0,-1);
     $tmparr['statusCode'] = 0;
 
-    if ($_POST['rename_newname']!=$_POST['rename_oldname'] && $_POST['rename_newname']!='') {
+    if ($_GET['rename_newname']!=$_GET['rename_oldname'] && $_GET['rename_newname']!='') {
         // rename 重命名
-        $oldname = spurlencode($_POST['rename_oldname']);
+        $oldname = spurlencode($_GET['rename_oldname']);
         $oldname = path_format($path1 . '/' . $oldname);
-        $data = '{"name":"' . $_POST['rename_newname'] . '"}';
+        $data = '{"name":"' . $_GET['rename_newname'] . '"}';
                 //echo $oldname;
         $result = MSAPI('PATCH',$oldname,$data,$_SERVER['access_token']);
         return output($result['body'], $result['stat']);
     }
-    if ($_POST['delete_name']!='') {
+    if ($_GET['delete_name']!='') {
         // delete 删除
-        $filename = spurlencode($_POST['delete_name']);
+        $filename = spurlencode($_GET['delete_name']);
         $filename = path_format($path1 . '/' . $filename);
                 //echo $filename;
         $result = MSAPI('DELETE', $filename, '', $_SERVER['access_token']);
         return output($result['body'], $result['stat']);
     }
-    if ($_POST['operate_action']==$constStr['encrypt'][$constStr['language']]) {
+    if ($_GET['operate_action']==$constStr['encrypt'][$constStr['language']]) {
         // encrypt 加密
         if (getenv('passfile')=='') return message($constStr['SetpassfileBfEncrypt'][$constStr['language']],'',403);
-        if ($_POST['encrypt_folder']=='/') $_POST['encrypt_folder']=='';
-        $foldername = spurlencode($_POST['encrypt_folder']);
+        if ($_GET['encrypt_folder']=='/') $_GET['encrypt_folder']=='';
+        $foldername = spurlencode($_GET['encrypt_folder']);
         $filename = path_format($path1 . '/' . $foldername . '/' . getenv('passfile'));
                 //echo $foldername;
-        $result = MSAPI('PUT', $filename, $_POST['encrypt_newpass'], $_SERVER['access_token']);
+        $result = MSAPI('PUT', $filename, $_GET['encrypt_newpass'], $_SERVER['access_token']);
         return output($result['body'], $result['stat']);
     }
-    if ($_POST['move_folder']!='') {
+    if ($_GET['move_folder']!='') {
         // move 移动
         $moveable = 1;
-        if ($path == '/' && $_POST['move_folder'] == '/../') $moveable=0;
-        if ($_POST['move_folder'] == $_POST['move_name']) $moveable=0;
+        if ($path == '/' && $_GET['move_folder'] == '/../') $moveable=0;
+        if ($_GET['move_folder'] == $_GET['move_name']) $moveable=0;
         if ($moveable) {
-            $filename = spurlencode($_POST['move_name']);
+            $filename = spurlencode($_GET['move_name']);
             $filename = path_format($path1 . '/' . $filename);
-            $foldername = path_format('/'.urldecode($path1).'/'.$_POST['move_folder']);
+            $foldername = path_format('/'.urldecode($path1).'/'.$_GET['move_folder']);
             $data = '{"parentReference":{"path": "/drive/root:'.$foldername.'"}}';
             $result = MSAPI('PATCH', $filename, $data, $_SERVER['access_token']);
             return output($result['body'], $result['stat']);
@@ -441,15 +441,15 @@ function adminoperate($path)
         $resultarry = json_decode($result,true);
         if (isset($resultarry['error'])) return message($resultarry['error']['message']. '<hr><a href="javascript:history.back(-1)">上一页</a>','Error',403);
     }
-    if ($_POST['create_name']!='') {
+    if ($_GET['create_name']!='') {
         // create 新建
-        if ($_POST['create_type']=='file') {
-            $filename = spurlencode($_POST['create_name']);
+        if ($_GET['create_type']=='file') {
+            $filename = spurlencode($_GET['create_name']);
             $filename = path_format($path1 . '/' . $filename);
-            $result = MSAPI('PUT', $filename, $_POST['create_text'], $_SERVER['access_token']);
+            $result = MSAPI('PUT', $filename, $_GET['create_text'], $_SERVER['access_token']);
         }
-        if ($_POST['create_type']=='folder') {
-            $data = '{ "name": "' . $_POST['create_name'] . '",  "folder": { },  "@microsoft.graph.conflictBehavior": "rename" }';
+        if ($_GET['create_type']=='folder') {
+            $data = '{ "name": "' . $_GET['create_name'] . '",  "folder": { },  "@microsoft.graph.conflictBehavior": "rename" }';
             $result = MSAPI('children', $path1, $data, $_SERVER['access_token']);
         }
         return output($result['body'], $result['stat']);
