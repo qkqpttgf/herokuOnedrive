@@ -306,7 +306,7 @@ function get_timezone($timezone = '8')
 function GetGlobalVariable($event)
 {
     $_GET = $event['queryString'];
-    $postbody = explode("&",$event['body']);
+    /*$postbody = explode("&",$event['body']);
     foreach ($postbody as $postvalues) {
         $pos = strpos($postvalues,"=");
         $_POST[urldecode(substr($postvalues,0,$pos))]=urldecode(substr($postvalues,$pos+1));
@@ -315,7 +315,7 @@ function GetGlobalVariable($event)
     foreach ($cookiebody as $cookievalues) {
         $pos = strpos($cookievalues,"=");
         $_COOKIE[urldecode(substr($cookievalues,0,$pos))]=urldecode(substr($cookievalues,$pos+1));
-    }
+    }*/
 }
 
 function GetPathSetting($event, $context)
