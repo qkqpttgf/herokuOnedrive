@@ -195,7 +195,7 @@ function fetch_files_children($files, $path, $page, $cache)
                     $pageinfocache['dirsize'] = $files['size'];
                     $pageinfocache['cachesize'] = $cachefile['size'];
                     $pageinfocache['size'] = $files['size']-$cachefile['size'];
-                    if ($pageinfochange == 1) echo MSAPI('PUT', path_format($path.'/'.$cachefilename), json_encode($pageinfocache, JSON_PRETTY_PRINT), $_SERVER['access_token'])['body'];
+                    if ($pageinfochange == 1) MSAPI('PUT', path_format($path.'/'.$cachefilename), json_encode($pageinfocache, JSON_PRETTY_PRINT), $_SERVER['access_token'])['body'];
                     return $files;
                 }
             } else {
@@ -219,7 +219,7 @@ function fetch_files_children($files, $path, $page, $cache)
                 $pageinfocache['dirsize'] = $files['size'];
                 $pageinfocache['cachesize'] = $cachefile['size'];
                 $pageinfocache['size'] = $files['size']-$cachefile['size'];
-                if ($pageinfochange == 1) echo MSAPI('PUT', path_format($path.'/'.$cachefilename), json_encode($pageinfocache, JSON_PRETTY_PRINT), $_SERVER['access_token'])['body'];
+                if ($pageinfochange == 1) MSAPI('PUT', path_format($path.'/'.$cachefilename), json_encode($pageinfocache, JSON_PRETTY_PRINT), $_SERVER['access_token'])['body'];
                 return $files;
             }
         }
@@ -271,7 +271,7 @@ function list_files($path)
             $data = '{"name":"' . $_GET['filemd5'] . $ext . '"}';
             //echo $oldname .'<br>'. $data;
             $tmp = MSAPI('PATCH',$oldname,$data,$_SERVER['access_token']);
-            if ($tmp['stat']==409) echo MSAPI('DELETE',$oldname,'',$_SERVER['access_token'])['body'];
+            if ($tmp['stat']==409) MSAPI('DELETE',$oldname,'',$_SERVER['access_token'])['body'];
             return output($tmp['body'],$tmp['stat']);
         }
         if ($_GET['action']=='upbigfile') return bigfileupload($path);
@@ -371,7 +371,7 @@ function bigfileupload($path)
         $responsearry = json_decode($response['body'],true);
         if (isset($responsearry['error'])) return output($response['body'], $response['stat']);
         $fileinfo['uploadUrl'] = $responsearry['uploadUrl'];
-        echo MSAPI('PUT', path_format($path1 . '/' . $cachefilename), json_encode($fileinfo, JSON_PRETTY_PRINT), $_SERVER['access_token'])['body'];
+        MSAPI('PUT', path_format($path1 . '/' . $cachefilename), json_encode($fileinfo, JSON_PRETTY_PRINT), $_SERVER['access_token'])['body'];
         return output($response['body'], $response['stat']);
     }
     return output('error', 400);
@@ -436,7 +436,7 @@ function adminoperate($path)
         $uploadurl=json_decode($response,true)['uploadUrl'];
         echo MSAPI('PUT',$uploadurl,$data,$_SERVER['access_token']);*/
         $result = MSAPI('PUT', $path1, $data, $_SERVER['access_token'])['body'];
-        echo $result;
+        //echo $result;
         $resultarry = json_decode($result,true);
         if (isset($resultarry['error'])) return message($resultarry['error']['message']. '<hr><a href="javascript:history.back(-1)">上一页</a>','Error',403);
     }
@@ -518,8 +518,9 @@ function MSAPI($method, $path, $data = '', $access_token)
     $response['body'] = curl_exec($ch);
     $response['stat'] = curl_getinfo($ch,CURLINFO_HTTP_CODE);
     curl_close($ch);
-    echo $response['stat'].'
-';
+    error_log($response['stat'].'
+'.$response['body'].'
+');
     return $response;
 }
 
@@ -570,8 +571,18 @@ namespace:' . $namespace . '<br>
                 $tmp[$k] = $v;
             }
         }
-        echo updataEnvironment($tmp, $function_name, $Region, $namespace);
-        $html .= '<script>location.href=location.href</script>';
+        $response = json_decode(updataEnvironment($tmp, $function_name, $Region, $namespace), true)['Response'];
+        if (isset($response['Error'])) {
+            $html = $response['Error']['Code'] . '<br>
+' . $response['Error']['Message'] . '<br><br>
+function_name:' . $_SERVER['function_name'] . '<br>
+Region:' . $_SERVER['Region'] . '<br>
+namespace:' . $namespace . '<br>
+<button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button>';
+            $title = 'Error';
+        } else {
+            $html .= '<script>location.href=location.href</script>';
+        }
     }
     $html .= '
         <a href="https://github.com/qkqpttgf/OneDrive_SCF">Github</a><br>';
