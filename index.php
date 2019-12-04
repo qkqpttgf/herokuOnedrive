@@ -689,8 +689,8 @@ function render_list($path, $files)
 <head>
     <title><?php echo $pretitle;?> - <?php echo $config['sitename'];?></title>
     <!--
-        帖子 ： https://www.hostloc.com/thread-561971-1-1.html
-        github ： https://github.com/qkqpttgf/OneDrive_SCF
+        帖子 ： https://www.hostloc.com/thread-617698-1-1.html
+        github ： https://github.com/qkqpttgf/herokuOnedrive
     -->
     <meta charset=utf-8>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
