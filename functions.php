@@ -9,7 +9,7 @@ function config_oauth()
     $_SERVER['sitename'] = getenv('sitename');
     if (empty($_SERVER['sitename'])) $_SERVER['sitename'] = $constStr['defaultSitename'][$constStr['language']];
     $_SERVER['redirect_uri'] = 'https://scfonedrive.github.io';
-
+echo 'Onedrive_ver'.$_SERVER['Onedrive_ver'];
     if (getenv('Onedrive_ver')=='MS') {
         // MS
         // https://portal.azure.com
