@@ -6,7 +6,7 @@
 include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
-include 'scfapi.php';
+//include 'scfapi.php';
 
 if (!function_exists('getenv')) {
     function getenv($str)
@@ -653,13 +653,13 @@ function render_list($path, $files)
 <head>
     <title><?php echo $pretitle;?> - <?php echo $_SERVER['sitename'];?></title>
     <!--
-        帖子 ： https://www.hostloc.com/thread-561971-1-1.html
-        github ： https://github.com/qkqpttgf/OneDrive_SCF
+        帖子 ： https://www.hostloc.com/thread-617698-1-1.html
+        github ： https://github.com/qkqpttgf/herokuOnedrive
     -->
     <meta charset=utf-8>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta name=viewport content="width=device-width,initial-scale=1">
-    <meta name="keywords" content="<?php echo $n_path;?>,<?php if ($p_path!='') echo $p_path.','; echo $_SERVER['sitename'];?>,OneDrive_SCF,auth_by_逸笙">
+    <meta name="keywords" content="<?php echo $n_path;?>,<?php if ($p_path!='') echo $p_path.','; echo $_SERVER['sitename'];?>,herokuOneDrive,auth_by_逸笙">
     <link rel="icon" href="<?php echo $_SERVER['base_path'];?>favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="<?php echo $_SERVER['base_path'];?>favicon.ico" type="image/x-icon" />
     <style type="text/css">
