@@ -15,7 +15,7 @@ if (!function_exists('getenv')) {
     }
 }
 if ($_SERVER['USER']!='qcloud') {
-	if ($_SERVER['onedrive_ver']=='') $_SERVER['onedrive_ver'] = 'MS';
+	if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
 	$event['headers'] = [
   		'cookie' => $_COOKIE,
   		'host' => $_SERVER['HTTP_HOST'],
