@@ -1411,9 +1411,9 @@ function render_list($path, $files)
                 return;
             }
             var xhr1 = new XMLHttpRequest();
-            xhr1.open("POST", '');
+            xhr1.open("GET", '?action=upbigfile&upbigfilename='+ encodeURIComponent(file.name) +'&filesize='+ file.size +'&lastModified='+ file.lastModified);
             xhr1.setRequestHeader('x-requested-with','XMLHttpRequest');
-            xhr1.send('action=upbigfile&upbigfilename='+ encodeURIComponent(file.name) +'&filesize='+ file.size +'&lastModified='+ file.lastModified);
+            xhr1.send(null);
             xhr1.onload = function(e){
                 td2.innerHTML='<font color="red">'+xhr1.responseText+'</font>';
                 if (xhr1.status==200) {
@@ -1521,18 +1521,18 @@ function render_list($path, $files)
                             if (response['size']>0) {
                                 // contain size, upload finish. 有size说明是最终返回，上传结束
                                 var xhr3 = new XMLHttpRequest();
-                                xhr3.open("POST", '');
+                                xhr3.open("GET", '?action=del_upload_cache&filename=.'+file.lastModified+ '_' +file.size+ '_' +encodeURIComponent(file.name)+'.tmp');
                                 xhr3.setRequestHeader('x-requested-with','XMLHttpRequest');
-                                xhr3.send('action=del_upload_cache&filename=.'+file.lastModified+ '_' +file.size+ '_' +encodeURIComponent(file.name)+'.tmp');
+                                xhr3.send(null);
                                 xhr3.onload = function(e){
                                     console.log(xhr3.responseText+','+xhr3.status);
                                 }
 <?php if (!$_SERVER['admin']) { ?>
-                                var xhr4 = new XMLHttpRequest();
-                                xhr4.open("POST", '');
-                                xhr4.setRequestHeader('x-requested-with','XMLHttpRequest');
                                 var filemd5 = spark.end();
-                                xhr4.send('action=uploaded_rename&filename='+encodeURIComponent(file.name)+'&filemd5='+filemd5);
+                                var xhr4 = new XMLHttpRequest();
+                                xhr4.open("GET", '?action=uploaded_rename&filename='+encodeURIComponent(file.name)+'&filemd5='+filemd5);
+                                xhr4.setRequestHeader('x-requested-with','XMLHttpRequest');
+                                xhr4.send(null);
                                 xhr4.onload = function(e){
                                     console.log(xhr4.responseText+','+xhr4.status);
                                     var filename;
@@ -1648,9 +1648,9 @@ function render_list($path, $files)
     function submit_operate(str) {
         var num=document.getElementById(str+'_sid').value;
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", '', true);
+        xhr.open("GET", '?'+serializeForm(str+'_form'));
         xhr.setRequestHeader('x-requested-with','XMLHttpRequest');
-        xhr.send(serializeForm(str+'_form'));
+        xhr.send(null);
         xhr.onload = function(e){
             var html;
             if (xhr.status<300) {
