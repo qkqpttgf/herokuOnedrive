@@ -161,7 +161,7 @@ function get_refresh_token($function_name, $Region, $Namespace)
             document.cookie=\'language=; path=/\';
         </script>';
             if (getenv('APIKey')!='') {
-                setHerokuConfig($function_name, [ 'refresh_token' => $tmptoken ], getenv('APIKey'))
+                setHerokuConfig($function_name, [ 'refresh_token' => $tmptoken ], getenv('APIKey'));
                 $str .= '
             <meta http-equiv="refresh" content="5;URL=' . $url . '">';
             }
