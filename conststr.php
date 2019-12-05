@@ -1,13 +1,11 @@
 <?php
 /*
 必填环境变量：  
-SecretId       ：腾讯云API 的 SecretId。  
-SecretKey      ：腾讯云API 的 SecretKey。  
+APIKey         ：heroku 的 API Key。  
 
 安装时程序自动填写：  
-Region         ：SCF程序所在地区。  
 Onedrive_ver   ：Onedrive版本  
-t1,t2,t3,t4,t5,t6,t7：把refresh_token按128字节切开来放在环境变量，方便更新版本。  
+refresh_token  ：把refresh_token放在环境变量，方便更新版本。  
 
 有选择地添加以下某些环境变量来做设置：  
 sitename       ：网站的名称，不添加会显示为‘请在环境变量添加sitename’。  
