@@ -105,7 +105,7 @@ function main_handler($event, $context)
     //$_SERVER['needUpdate'] = needUpdate();
     if ($_GET['setup']) if ($_SERVER['admin'] && getenv('APIKey')!='') {
         // setup Environments. 设置，对环境变量操作
-        return EnvOpt($_SERVER['function_name'], $_SERVER['Region'], $context['namespace'], $_SERVER['needUpdate']);
+        return EnvOpt($_SERVER['function_name'], $_SERVER['needUpdate']);
     } else {
         $url = path_format($_SERVER['PHP_SELF'] . '/');
         return output('<script>alert(\''.$constStr['SetSecretsFirst'][$constStr['language']].'\');</script>', 302, [ 'Location' => $url ]);
@@ -580,6 +580,7 @@ namespace:' . $namespace . '<br>
         }
         return message($html, $title);
     }*/
+	echo '<pre>' . json_encode($_POST, JSON_PRETTY_PRINT) . '</pre>';
     if ($_POST['submit1']) {
         foreach ($_POST as $k => $v) {
             if (in_array($k, $constEnv)) {
