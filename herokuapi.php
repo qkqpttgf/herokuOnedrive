@@ -1,3 +1,4 @@
+<?php
 function HerokuAPI($method, $url, $data = '', $apikey)
 {
     if ($method=='PATCH') {
@@ -41,3 +42,4 @@ function setHerokuConfig($function_name, $env, $apikey)
     $data = json_encode($env);
     return HerokuAPI('PATCH', 'https://api.heroku.com/apps/' . $function_name . '/config-vars', $data, $apikey);
 }
+?>
