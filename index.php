@@ -102,8 +102,8 @@ function main_handler($event, $context)
     } else {
         $_SERVER['admin']=0;
     }
-    $_SERVER['needUpdate'] = needUpdate();
-    if ($_GET['setup']) if ($_SERVER['admin'] && getenv('SecretId')!='' && getenv('SecretKey')!='') {
+    //$_SERVER['needUpdate'] = needUpdate();
+    if ($_GET['setup']) if ($_SERVER['admin'] && getenv('APIKey')!='') {
         // setup Environments. 设置，对环境变量操作
         return EnvOpt($_SERVER['function_name'], $_SERVER['Region'], $context['namespace'], $_SERVER['needUpdate']);
     } else {
@@ -554,7 +554,7 @@ function get_thumbnails_url($path = '/')
     return output('', 404);
 }
 
-function EnvOpt($function_name, $Region, $namespace = 'default', $needUpdate = 0)
+function EnvOpt($function_name, $needUpdate = 0)
 {
     global $constStr;
     $constEnv = [
@@ -562,8 +562,8 @@ function EnvOpt($function_name, $Region, $namespace = 'default', $needUpdate = 0
         'adminloginpage', 'domain_path', 'imgup_path', 'passfile', 'private_path', 'public_path', 'sitename', 'language'
     ];
     asort($constEnv);
-    $html = '<title>SCF '.$constStr['Setup'][$constStr['language']].'</title>';
-    if ($_POST['updateProgram']==$constStr['updateProgram'][$constStr['language']]) {
+    $html = '<title>Heroku '.$constStr['Setup'][$constStr['language']].'</title>';
+    /*if ($_POST['updateProgram']==$constStr['updateProgram'][$constStr['language']]) {
         $response = json_decode(updataProgram($function_name, $Region, $namespace), true)['Response'];
         if (isset($response['Error'])) {
             $html = $response['Error']['Code'] . '<br>
@@ -579,14 +579,14 @@ namespace:' . $namespace . '<br>
             $title = $constStr['Setup'][$constStr['language']];
         }
         return message($html, $title);
-    }
+    }*/
     if ($_POST['submit1']) {
         foreach ($_POST as $k => $v) {
             if (in_array($k, $constEnv)) {
                 $tmp[$k] = $v;
             }
         }
-        $response = json_decode(updataEnvironment($tmp, $function_name, $Region, $namespace), true)['Response'];
+        $response = json_decode(setHerokuConfig($function_name, $tmp, getenv('APIKey')), true);
         if (isset($response['Error'])) {
             $html = $response['Error']['Code'] . '<br>
 ' . $response['Error']['Message'] . '<br><br>
@@ -600,15 +600,15 @@ namespace:' . $namespace . '<br>
         }
     }
     $html .= '
-        <a href="https://github.com/qkqpttgf/OneDrive_SCF">Github</a><br>';
-    if ($needUpdate) {
+        <a href="https://github.com/qkqpttgf/herokuOnedrive">Github</a><br>';
+    /*if ($needUpdate) {
         $html .= '<pre>' . $_SERVER['github_version'] . '</pre>
         <form action="" method="post">
             <input type="submit" name="updateProgram" value="'.$constStr['updateProgram'][$constStr['language']].'">
         </form>';
     } else {
         $html .= $constStr['NotNeedUpdate'][$constStr['language']];
-    }
+    }*/
     $html .= '
     <form action="" method="post">
     <table border=1 width=100%>';
