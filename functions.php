@@ -359,8 +359,7 @@ function GetPathSetting($event, $context)
     } else {
         $_SERVER['list_path'] = spurlencode($_SERVER['list_path'],'/') ;
     }
-    error_log( path_format('/'.path_format(urldecode($_SERVER['list_path'].path_format($path))).'/').'
-    '.path_format('/'.path_format(getenv('imgup_path')).'/') );
+    //error_log( path_format('/'.path_format(urldecode($_SERVER['list_path'].path_format($path))).'/').'    '.path_format('/'.path_format(getenv('imgup_path')).'/') );
     $_SERVER['is_imgup_path'] = is_imgup_path($path);
     $_SERVER['PHP_SELF'] = path_format($_SERVER['base_path'] . $path);
     $_SERVER['REMOTE_ADDR'] = $event['requestContext']['sourceIp'];
@@ -384,6 +383,7 @@ function GetPathSetting($event, $context)
 
 function is_imgup_path($path)
 {
+    error_log(path_format('/'.path_format(urldecode($_SERVER['list_path'].path_format($path))).'/')==path_format('/'.path_format(getenv('imgup_path')).'/')&&getenv('imgup_path')!='');
     if (path_format('/'.path_format(urldecode($_SERVER['list_path'].path_format($path))).'/')==path_format('/'.path_format(getenv('imgup_path')).'/')&&getenv('imgup_path')!='') return 1;
     return 0;
 }
