@@ -12,6 +12,7 @@ function HerokuAPI($method, $url, $data = '', $apikey)
     foreach ($headers as $headerName => $headerVal) {
         $sendHeaders[] = $headerName . ': ' . $headerVal;
     }
+    error_log($method . $url . $data . $apikey);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST,$method);
