@@ -57,6 +57,7 @@ if ($_SERVER['USER']!='qcloud') {
 		$maindomain = substr($tmp, strrpos($tmp, '.'));
 		if ($maindomain=='herokuapp') $context['function_name'] = substr($tmp, 0, strrpos($tmp, '.'));
 	}
+	echo $context['function_name'];
     $re = main_handler($event, $context);
     $sendHeaders = array();
     foreach ($re['headers'] as $headerName => $headerVal) {
