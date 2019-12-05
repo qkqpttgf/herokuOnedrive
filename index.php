@@ -26,7 +26,7 @@ if (!function_exists('getenv')) {
 include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
-//include 'scfapi.php';
+include 'herokuapi.php';
 //echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
@@ -50,7 +50,7 @@ if ($_SERVER['USER']!='qcloud') {
     }
     $event['queryString'] = $getarry;
     $event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    $context['function_name'] = 'heroonedrive';
+    $context['function_name'] = getenv('function_name');
     $re = main_handler($event, $context);
     $sendHeaders = array();
     foreach ($re['headers'] as $headerName => $headerVal) {
