@@ -597,7 +597,7 @@ namespace:' . $namespace . '<br>
 <button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button>';
             $title = 'Error';
         } else {
-            $html .= '<script>location.href=location.href</script>';
+            //$html .= '<script>location.href=location.href</script>';
         }
     }
     $html .= '
