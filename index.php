@@ -27,7 +27,7 @@ include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
 //include 'scfapi.php';
-echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
+//echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
