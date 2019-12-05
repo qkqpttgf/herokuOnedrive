@@ -581,7 +581,6 @@ namespace:' . $namespace . '<br>
         }
         return message($html, $title);
     }*/
-	echo '<pre>' . json_encode($_POST, JSON_PRETTY_PRINT) . '</pre>';
     if ($_POST['submit1']) {
         foreach ($_POST as $k => $v) {
             if (in_array($k, $constEnv)) {
@@ -598,7 +597,7 @@ namespace:' . $namespace . '<br>
 <button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button>';
             $title = 'Error';
         } else {
-            //$html .= '<script>location.href=location.href</script>';
+            $html .= '<script>location.href=location.href</script>';
         }
     }
     $html .= '
