@@ -64,7 +64,7 @@ function main_handler($event, $context)
     global $constStr;
     $event = json_decode(json_encode($event), true);
     $context = json_decode(json_encode($context), true);
-    printInput($event, $context);
+    //printInput($event, $context);
 
     //unset($_POST);
     unset($_GET);
