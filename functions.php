@@ -142,14 +142,17 @@ function get_refresh_token($function_name, $Region, $Namespace)
             $tmptoken=$ret['refresh_token'];
             $str = '
         refresh_token :<br>';
-            for ($i=1;strlen($tmptoken)>0;$i++) {
+            /*for ($i=1;strlen($tmptoken)>0;$i++) {
                 $t['t' . $i] = substr($tmptoken,0,128);
                 $str .= '
             t' . $i . ':<textarea readonly style="width: 95%">' . $t['t' . $i] . '</textarea><br><br>';
                 $tmptoken=substr($tmptoken,128);
             }
             $str .= '
-        Add t1-t'.--$i.' to environments.
+        Add t1-t'.--$i.' to environments.*/
+            $str .= '
+        <textarea readonly style="width: 95%">' . $tmptoken . '</textarea>
+        Add refresh_token to environments.
         <script>
             var texta=document.getElementsByTagName(\'textarea\');
             for(i=0;i<texta.length;i++) {
@@ -157,8 +160,8 @@ function get_refresh_token($function_name, $Region, $Namespace)
             }
             document.cookie=\'language=; path=/\';
         </script>';
-            if (getenv('SecretId')!='' && getenv('SecretKey')!='') {
-                echo updataEnvironment($t, $function_name, $Region, $Namespace);
+            if (getenv('APIKey')!='') {
+                setHerokuConfig($function_name, [ 'refresh_token' => $tmptoken ], getenv('APIKey'))
                 $str .= '
             <meta http-equiv="refresh" content="5;URL=' . $url . '">';
             }
@@ -189,7 +192,7 @@ function get_refresh_token($function_name, $Region, $Namespace)
             $tmp['language'] = $_COOKIE['language'];
             $tmp['client_id'] = $_POST['client_id'];
             $tmp['client_secret'] = equal_replace(base64_encode($_POST['client_secret']));
-            $response = json_decode(updataEnvironment($tmp, $_SERVER['function_name'], $_SERVER['Region'], $Namespace), true)['Response'];
+            $response = json_decode(setHerokuConfig($function_name, $tmp, getenv('APIKey')), true);
             sleep(2);
             $title = $constStr['MayinEnv'][$constStr['language']];
             $html = $constStr['Wait'][$constStr['language']] . ' 3s<meta http-equiv="refresh" content="3;URL=' . $url . '?install2">';
@@ -207,8 +210,8 @@ namespace:' . $Namespace . '<br>
     }
 
     if ($_GET['install0']) {
-        if (getenv('SecretId')=='' || getenv('SecretKey')=='') return message($constStr['SetSecretsFirst'][$constStr['language']].'<button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button><br>'.'(<a href="https://console.cloud.tencent.com/cam/capi" target="_blank">'.$constStr['Create'][$constStr['language']].' SecretId & SecretKey</a>)', 'Error', 500);
-        $response = json_decode(SetConfig($_SERVER['function_name'], $_SERVER['Region'], $Namespace), true)['Response'];
+        if (getenv('APIKey')=='') return message($constStr['SetSecretsFirst'][$constStr['language']].'<button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button><br>'.'(<a href="https://dashboard.heroku.com/account" target="_blank">'.$constStr['Create'][$constStr['language']].' API Key</a>)', 'Error', 500);
+        $response = json_decode(setHerokuConfig($function_name, [ 'function_name' => $function_name ], getenv('APIKey')), true);
         if (isset($response['Error'])) {
             $html = $response['Error']['Code'] . '<br>
 ' . $response['Error']['Message'] . '<br><br>
