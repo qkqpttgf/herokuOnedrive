@@ -361,6 +361,7 @@ function GetPathSetting($event, $context)
     }
     //error_log( path_format('/'.path_format(urldecode($_SERVER['list_path'].path_format($path))).'/').'    '.path_format('/'.path_format(getenv('imgup_path')).'/') );
     $_SERVER['is_imgup_path'] = is_imgup_path($path);
+    error_log('isimgpath:'.$_SERVER['is_imgup_path']);
     $_SERVER['PHP_SELF'] = path_format($_SERVER['base_path'] . $path);
     $_SERVER['REMOTE_ADDR'] = $event['requestContext']['sourceIp'];
     $_SERVER['ajax']=0;
