@@ -3,10 +3,24 @@
     帖子 ： https://www.hostloc.com/thread-617698-1-1.html
     github ： https://github.com/qkqpttgf/herokuOnedrive
 */
+/*
+onedrive_ver   ：默认MS是微软（支持商业版与个人版），改成CN是世纪互联。  
+refresh_token  ：把refresh_token放在环境变量，方便更新版本。  
+sitename       ：网站的名称，不添加会显示为‘请在环境变量添加sitename’。  
+admin          ：管理密码，不添加时不显示登录页面且无法登录。  
+adminloginpage ：管理登录的页面不再是'?admin'，而是此设置的值。如果设置，登录按钮及页面隐藏。  
+//public_path    ：使用API长链接访问时，显示网盘文件的路径，不设置时默认为根目录；  
+//           　　　不能是private_path的上级（public看到的不能比private多，要么看到的就不一样）。  
+//private_path   ：使用自定义域名访问时，显示网盘文件的路径，不设置时默认为根目录。  
+//domain_path    ：格式为a1.com=/dir/path1&b1.com=/path2，比private_path优先。  
+imgup_path     ：设置图床路径，不设置这个值时该目录内容会正常列文件出来，设置后只有上传界面，不显示其中文件（登录后显示）。  
+passfile       ：自定义密码文件的名字，可以是'pppppp'，也可以是'aaaa.txt'等等；  
+        　       密码是这个文件的内容，可以空格、可以中文；列目录时不会显示，只有知道密码才能查看或下载此文件。  
+*/
 if (!function_exists('getenv')) {
     function getenv($str)
     {
-	    return $_SERVER[$str];
+        return $_SERVER[$str];
     }
 }
 include 'vendor/autoload.php';
@@ -14,35 +28,35 @@ include 'conststr.php';
 include 'functions.php';
 //include 'scfapi.php';
 if ($_SERVER['USER']!='qcloud') {
-	if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
-	$event['headers'] = [
-  		'cookie' => $_COOKIE,
-  		'host' => $_SERVER['HTTP_HOST'],
-		'x-requested-with' => $_SERVER['HTTP_X_REQUESTED_WITH'],
-	];
-	if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
-	else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
-	$event['path'] = $_SERVER['REDIRECT_URL'];
-	$getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL']));
-	while (substr($getstr,0,1)=='/' ||substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
-	$getstrarr = explode("&",$getstr);
+    if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
+    $event['headers'] = [
+        'cookie' => $_COOKIE,
+        'host' => $_SERVER['HTTP_HOST'],
+        'x-requested-with' => $_SERVER['HTTP_X_REQUESTED_WITH'],
+    ];
+    if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
+    else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
+    $event['path'] = $_SERVER['REDIRECT_URL'];
+    $getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL']));
+    while (substr($getstr,0,1)=='/' ||substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
+    $getstrarr = explode("&",$getstr);
     foreach ($getstrarr as $getvalues) {
         $pos = strpos($getvalues,"=");
 		//echo $pos;
-		if ($getvalues!=''&&$pos>0) {
-			$getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
-		} else $getarry[urldecode($getvalues)] = true;
+        if ($getvalues!=''&&$pos>0) {
+            $getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
+        } else $getarry[urldecode($getvalues)] = true;
     }
-	$event['queryString'] = $getarry;
-	$event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	$context['function_name'] = 'heroonedrive';
-	$re = main_handler($event, $context);
-	$sendHeaders = array();
+    $event['queryString'] = $getarry;
+    $event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    $context['function_name'] = 'heroonedrive';
+    $re = main_handler($event, $context);
+    $sendHeaders = array();
     foreach ($re['headers'] as $headerName => $headerVal) {
         header($headerName . ': ' . $headerVal, true);
     }
-	http_response_code($re['statusCode']);
-	echo $re['body'];
+    http_response_code($re['statusCode']);
+    echo $re['body'];
 }
 
 function main_handler($event, $context)
@@ -50,7 +64,7 @@ function main_handler($event, $context)
     global $constStr;
     $event = json_decode(json_encode($event), true);
     $context = json_decode(json_encode($context), true);
-    //printInput($event, $context);
+    printInput($event, $context);
 
     //unset($_POST);
     unset($_GET);
