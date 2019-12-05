@@ -5,7 +5,7 @@ function HerokuAPI($method, $url, $data = '', $apikey)
         $headers['Content-Type'] = 'application/json';
     } 
     $headers['Authorization'] = 'Bearer ' . $apikey;
-    $headers['Accept'] = 'application/vnd.heroku+json';
+    $headers['Accept'] = 'application/vnd.heroku+json; version=3';
     //if (!isset($headers['Accept'])) $headers['Accept'] = '*/*';
     //if (!isset($headers['Referer'])) $headers['Referer'] = $url;
     $sendHeaders = array();
