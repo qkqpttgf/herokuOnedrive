@@ -101,17 +101,9 @@ $constStr = [
             'en-us' => 'en-us or zh-cn',
             'zh-cn' => '目前en-us 或 zh-cn',
         ],
-        'SecretId' => [
-            'en-us' => 'the SecretId of tencent cloud',
-            'zh-cn' => '腾讯云API的Id',
-        ],
-        'SecretKey' => [
-            'en-us' => 'the SecretKey of tencent cloud',
-            'zh-cn' => '腾讯云API的Key',
-        ],
-        'Region' => [
-            'en-us' => 'the Region of SCF',
-            'zh-cn' => 'SCF程序所在地区',
+        'APIKey' => [
+            'en-us' => 'the APIKey of Heroku',
+            'zh-cn' => 'Heroku的API Key',
         ],
         'Onedrive_ver' => [
             'en-us' => 'Onedrive version',
@@ -119,8 +111,8 @@ $constStr = [
         ],
     ],
     'SetSecretsFirst' => [
-        'en-us' => 'Set SecretId & SecretKey in Environments first! Then reflesh.',
-        'zh-cn' => '先在环境变量设置SecretId和SecretKey！再刷新。',
+        'en-us' => 'Set APIKey in Config vars first! Then reflesh.',
+        'zh-cn' => '先在环境变量设置APIKey！再刷新。',
     ],
     'RefleshtoLogin' => [
         'en-us' => '<font color="red">Reflesh</font> and login.',
