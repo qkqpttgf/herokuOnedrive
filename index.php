@@ -4,6 +4,7 @@
     github ： https://github.com/qkqpttgf/herokuOnedrive
 */
 /*
+APIKey         ：API Key。
 onedrive_ver   ：默认MS是微软（支持商业版与个人版），改成CN是世纪互联。  
 refresh_token  ：把refresh_token放在环境变量，方便更新版本。  
 sitename       ：网站的名称，不添加会显示为‘请在环境变量添加sitename’。  
