@@ -924,9 +924,15 @@ function render_list($path, $files)
                             <ion-icon name="paper"></ion-icon>
 <?php                           } elseif (in_array($ext, $exts['txt'])) { ?>
                             <ion-icon name="clipboard"></ion-icon>
+<?php                           } elseif (in_array($ext, $exts['zip'])) { ?>
+                            <ion-icon name="logo-buffer"></ion-icon>
 <?php                           } elseif ($ext=='apk') { ?>
                             <ion-icon name="logo-android"></ion-icon>
+<?php                           } elseif ($ext=='exe') { ?>
+                            <ion-icon name="logo-windows"></ion-icon>
 <?php                           } else { ?>
+                            <ion-icon name="document"></ion-icon>
+<?php                           } ?>
                             <ion-icon name="document"></ion-icon>
 <?php                           } ?>
                             <a id="file_a<?php echo $filenum;?>" name="filelist" href="<?php echo path_format($_SERVER['base_path'] . '/' . $path . '/' . encode_str_replace($file['name'])); ?>?preview" target=_blank><?php echo str_replace('&','&amp;', $file['name']); ?></a>
