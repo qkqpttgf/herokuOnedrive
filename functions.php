@@ -151,7 +151,7 @@ function get_refresh_token($function_name, $Region, $Namespace)
             $str .= '
         Add t1-t'.--$i.' to environments.*/
             $str .= '
-        <textarea readonly style="width: 95%">' . $tmptoken . '</textarea>
+        <textarea readonly style="width: 95%">' . $tmptoken . '</textarea><br><br>
         Add refresh_token to environments.
         <script>
             var texta=document.getElementsByTagName(\'textarea\');
@@ -197,14 +197,12 @@ function get_refresh_token($function_name, $Region, $Namespace)
             $title = $constStr['MayinEnv'][$constStr['language']];
             $html = $constStr['Wait'][$constStr['language']] . ' 3s<meta http-equiv="refresh" content="3;URL=' . $url . '?install2">';
             $html .= json_encode($response);
-            if (isset($response['Error'])) {
-                $html = $response['Error']['Code'] . '<br>
-' . $response['Error']['Message'] . '<br><br>
+            if (isset($response['id'])&&isset($response['message'])) {
+            $html = $response['id'] . '<br>
+' . $response['message'] . '<br><br>
 function_name:' . $_SERVER['function_name'] . '<br>
-Region:' . $_SERVER['Region'] . '<br>
-namespace:' . $Namespace . '<br>
 <button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button>';
-                $title = 'Error';
+            $title = 'Error';
             }
             return message($html, $title, 201);
         }
@@ -213,12 +211,10 @@ namespace:' . $Namespace . '<br>
     if ($_GET['install0']) {
         if (getenv('APIKey')=='') return message($constStr['SetSecretsFirst'][$constStr['language']].'<button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button><br>'.'(<a href="https://dashboard.heroku.com/account" target="_blank">'.$constStr['Create'][$constStr['language']].' API Key</a>)', 'Error', 500);
         $response = json_decode(setHerokuConfig($function_name, [ 'function_name' => $function_name ], getenv('APIKey')), true);
-        if (isset($response['Error'])) {
-            $html = $response['Error']['Code'] . '<br>
-' . $response['Error']['Message'] . '<br><br>
+        if (isset($response['id'])&&isset($response['message'])) {
+            $html = $response['id'] . '<br>
+' . $response['message'] . '<br><br>
 function_name:' . $_SERVER['function_name'] . '<br>
-Region:' . $_SERVER['Region'] . '<br>
-namespace:' . $Namespace . '<br>
 <button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button>';
             $title = 'Error';
         } else {
