@@ -29,7 +29,6 @@ include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
 //echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
-echo getenv('admin');
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
@@ -594,12 +593,10 @@ namespace:' . $namespace . '<br>
             }
         }
         $response = json_decode(setHerokuConfig($function_name, $tmp, getenv('APIKey')), true);
-        if (isset($response['Error'])) {
-            $html = $response['Error']['Code'] . '<br>
-' . $response['Error']['Message'] . '<br><br>
+        if (isset($response['id'])&&isset($response['message'])) {
+            $html = $response['id'] . '<br>
+' . $response['message'] . '<br><br>
 function_name:' . $_SERVER['function_name'] . '<br>
-Region:' . $_SERVER['Region'] . '<br>
-namespace:' . $namespace . '<br>
 <button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button>';
             $title = 'Error';
         } else {
