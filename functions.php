@@ -190,8 +190,10 @@ function get_refresh_token($function_name, $Region, $Namespace)
         if ($_POST['Onedrive_ver']=='MS' || $_POST['Onedrive_ver']=='CN' || $_POST['Onedrive_ver']=='MSC') {
             $tmp['Onedrive_ver'] = $_POST['Onedrive_ver'];
             $tmp['language'] = $_COOKIE['language'];
-            $tmp['client_id'] = $_POST['client_id'];
-            $tmp['client_secret'] = equal_replace(base64_encode($_POST['client_secret']));
+            if ($_POST['Onedrive_ver']=='MSC') {
+                $tmp['client_id'] = $_POST['client_id'];
+                $tmp['client_secret'] = equal_replace(base64_encode($_POST['client_secret']));
+            }
             $response = json_decode(setHerokuConfig($function_name, $tmp, getenv('APIKey')), true);
             sleep(2);
             $title = $constStr['MayinEnv'][$constStr['language']];
