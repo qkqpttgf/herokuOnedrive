@@ -28,7 +28,7 @@ include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
-echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
+//echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
@@ -53,7 +53,7 @@ if ($_SERVER['USER']!='qcloud') {
     $event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
     $context['function_name'] = getenv('function_name');
 	if ($context['function_name']=='') {
-		$tmp = substr($_SERVER['HOST_NAME'], 0, strrpos($_SERVER['HOST_NAME'], '.'));
+		$tmp = substr($_SERVER['HTTP_HOST'], 0, strrpos($_SERVER['HTTP_HOST'], '.'));
 		$maindomain = substr($tmp, strrpos($tmp, '.'));
 		echo $tmp.$maindomain;
 		if ($maindomain=='herokuapp') $context['function_name'] = substr($tmp, 0, strrpos($tmp, '.'));
