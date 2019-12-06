@@ -18,18 +18,18 @@ imgup_path     ：设置图床路径，不设置这个值时该目录内容会�
 passfile       ：自定义密码文件的名字，可以是'pppppp'，也可以是'aaaa.txt'等等；  
         　       密码是这个文件的内容，可以空格、可以中文；列目录时不会显示，只有知道密码才能查看或下载此文件。  
 */
-if (!function_exists('getenv')) {
+/*if (!function_exists('getenv')) {
     function getenv($str)
     {
         return $_SERVER[$str];
     }
-}
+}*/
 include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
 //echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
-echo env('admin');
+echo getenv('admin');
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
