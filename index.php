@@ -29,6 +29,7 @@ include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
 //echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
+echo env('admin');
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
@@ -57,7 +58,6 @@ if ($_SERVER['USER']!='qcloud') {
 		$maindomain = substr($tmp, strrpos($tmp, '.')+1);
 		if ($maindomain=='herokuapp') $context['function_name'] = substr($tmp, 0, strrpos($tmp, '.'));
 	}
-	echo $context['function_name'];
     $re = main_handler($event, $context);
     $sendHeaders = array();
     foreach ($re['headers'] as $headerName => $headerVal) {
