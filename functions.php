@@ -198,7 +198,6 @@ function get_refresh_token($function_name, $Region, $Namespace)
             sleep(2);
             $title = $constStr['MayinEnv'][$constStr['language']];
             $html = $constStr['Wait'][$constStr['language']] . ' 3s<meta http-equiv="refresh" content="3;URL=' . $url . '?install2">';
-            $html .= json_encode($response);
             if (isset($response['id'])&&isset($response['message'])) {
             $html = $response['id'] . '<br>
 ' . $response['message'] . '<br><br>
@@ -211,7 +210,7 @@ function_name:' . $_SERVER['function_name'] . '<br>
     }
 
     if ($_GET['install0']) {
-        if (getenv('APIKey')=='') return message($constStr['SetSecretsFirst'][$constStr['language']].'<button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button><br>'.'(<a href="https://dashboard.heroku.com/account" target="_blank">'.$constStr['Create'][$constStr['language']].' API Key</a>)', 'Error', 500);
+        if (getenv('APIKey')=='') return message($constStr['SetSecretsFirst'][$constStr['language']].'<button onclick="location.href = location.href;">'.$constStr['Reflesh'][$constStr['language']].'</button><br>'.'(<a href="https://dashboard.heroku.com/account" target="_blank">'.' API Key</a>)', 'Error', 500);
         $response = json_decode(setHerokuConfig($function_name, [ 'function_name' => $function_name ], getenv('APIKey')), true);
         if (isset($response['id'])&&isset($response['message'])) {
             $html = $response['id'] . '<br>
