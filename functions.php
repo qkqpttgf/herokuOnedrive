@@ -196,6 +196,7 @@ function get_refresh_token($function_name, $Region, $Namespace)
             sleep(2);
             $title = $constStr['MayinEnv'][$constStr['language']];
             $html = $constStr['Wait'][$constStr['language']] . ' 3s<meta http-equiv="refresh" content="3;URL=' . $url . '?install2">';
+            $html .= json_encode($response);
             if (isset($response['Error'])) {
                 $html = $response['Error']['Code'] . '<br>
 ' . $response['Error']['Message'] . '<br><br>
