@@ -55,6 +55,7 @@ if ($_SERVER['USER']!='qcloud') {
 	if ($context['function_name']=='') {
 		$tmp = substr($_SERVER['HOST_NAME'], 0, strrpos($_SERVER['HOST_NAME'], '.'));
 		$maindomain = substr($tmp, strrpos($tmp, '.'));
+		echo $tmp.$maindomain;
 		if ($maindomain=='herokuapp') $context['function_name'] = substr($tmp, 0, strrpos($tmp, '.'));
 	}
 	echo $context['function_name'];
