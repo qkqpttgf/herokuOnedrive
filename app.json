@@ -10,6 +10,9 @@
      },
     "admin": {
        "description": "管理密码，不添加时不显示登录页面且无法登录。"
+     },
+    "APIKey": {
+       "description": "获取：https://dashboard.heroku.com/account"
      }
   }
 }
