@@ -925,7 +925,9 @@ function render_list($path, $files)
 <?php                           } elseif (in_array($ext, $exts['txt'])) { ?>
                             <ion-icon name="clipboard"></ion-icon>
 <?php                           } elseif (in_array($ext, $exts['zip'])) { ?>
-                            <ion-icon name="logo-buffer"></ion-icon>
+                            <ion-icon name="filing"></ion-icon>
+<?php                           } elseif ($ext=='iso') { ?>
+                            <ion-icon name="disc"></ion-icon>
 <?php                           } elseif ($ext=='apk') { ?>
                             <ion-icon name="logo-android"></ion-icon>
 <?php                           } elseif ($ext=='exe') { ?>
