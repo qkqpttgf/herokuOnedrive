@@ -5,14 +5,11 @@
   "repository": "https://github.com/qkqpttgf/herokuOnedrive",
   "success_url": "/",
   "env": {
-    "sitename": {
-       "description": "网站的名称，不添加会显示为‘请在环境变量添加sitename’。"
-     },
     "admin": {
-       "description": "管理密码，不添加时不显示登录页面且无法登录。"
+       "description": "admin password to manage Onedrive files. 管理密码，不添加时不显示登录页面且无法登录。"
      },
     "APIKey": {
-       "description": "获取：https://dashboard.heroku.com/account"
+       "description": "Get the API Key at https://dashboard.heroku.com/account (PageDown to find it). 在英文里的URL查找API Key，倒数第几栏。"
      }
   }
 }
