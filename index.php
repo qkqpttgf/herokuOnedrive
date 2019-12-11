@@ -605,6 +605,7 @@ function_name:' . $_SERVER['function_name'] . '<br>
         }
     }
     $html .= '
+        <a href="'.$_SERVER['PHP_SELF'].'">'.$constStr['BackHome'][$constStr['language']].'</a>&nbsp;&nbsp;&nbsp;
         <a href="https://github.com/qkqpttgf/herokuOnedrive">Github</a><br>';
     /*if ($needUpdate) {
         $html .= '<pre>' . $_SERVER['github_version'] . '</pre>
@@ -747,7 +748,7 @@ function render_list($path, $files)
         <li><a onclick="showdiv(event,'create','');"><?php echo $constStr['Create'][$constStr['language']]; ?></a></li>
         <li><a onclick="showdiv(event,'encrypt','');"><?php echo $constStr['encrypt'][$constStr['language']]; ?></a></li>
 <?php   } ?>
-        <li><a <?php if (getenv('APIKey')!='') { ?>href="?setup" target="_blank"<?php } else { ?>onclick="alert('<?php echo $constStr['SetSecretsFirst'][$constStr['language']]; ?>');"<?php } ?>><?php echo $constStr['Setup'][$constStr['language']]; ?></a></li>
+        <li><a <?php if (getenv('APIKey')!='') { ?>href="?setup"<?php } else { ?>onclick="alert('<?php echo $constStr['SetSecretsFirst'][$constStr['language']]; ?>');"<?php } ?>><?php echo $constStr['Setup'][$constStr['language']]; ?></a></li>
         <li><a onclick="logout()"><?php echo $constStr['Logout'][$constStr['language']]; ?></a></li>
     </ul></li>
 <?php
