@@ -155,6 +155,10 @@ $constStr = [
         'en-us' => 'Setup',
         'zh-cn' => '设置',
     ],
+    'BackHome' => [
+        'en-us' => 'Back to Home page',
+        'zh-cn' => '返回首页',
+    ],
     'NotNeedUpdate' => [
         'en-us' => 'Not Need Update',
         'zh-cn' => '不需要更新',
@@ -336,7 +340,7 @@ $constStr = [
         'zh-cn' => '稍等',
     ],
     'WaitJumpIndex' => [
-        'en-us' => 'Wait 5s jump to index page',
+        'en-us' => 'Wait 5s jump to Home page',
         'zh-cn' => '等5s跳到首页',
     ],
     'JumptoOffice' => [
