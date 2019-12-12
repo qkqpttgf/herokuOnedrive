@@ -590,7 +590,7 @@ namespace:' . $namespace . '<br>
     if ($_POST['submit1']) {
         foreach ($_POST as $k => $v) {
             if (in_array($k, $constEnv)) {
-                $tmp[$k] = $v;
+                if (!(getenv($k)==''&&$v=='')) $tmp[$k] = $v;
             }
         }
         $response = json_decode(setHerokuConfig($function_name, $tmp, getenv('APIKey')), true);
