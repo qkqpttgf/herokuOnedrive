@@ -155,9 +155,9 @@ $constStr = [
         'en-us' => 'Setup',
         'zh-cn' => '设置',
     ],
-    'BackHome' => [
-        'en-us' => 'Back to Home page',
-        'zh-cn' => '返回首页',
+    'Back' => [
+        'en-us' => 'Back',
+        'zh-cn' => '返回',
     ],
     'NotNeedUpdate' => [
         'en-us' => 'Not Need Update',
