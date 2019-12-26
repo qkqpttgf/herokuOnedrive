@@ -18,12 +18,6 @@ imgup_path     ：设置图床路径，不设置这个值时该目录内容会�
 passfile       ：自定义密码文件的名字，可以是'pppppp'，也可以是'aaaa.txt'等等；  
         　       密码是这个文件的内容，可以空格、可以中文；列目录时不会显示，只有知道密码才能查看或下载此文件。  
 */
-/*if (!function_exists('getenv')) {
-    function getenv($str)
-    {
-        return $_SERVER[$str];
-    }
-}*/
 include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
@@ -39,13 +33,13 @@ if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
     else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
     $event['path'] = $_SERVER['REDIRECT_URL'];
-    $getstr = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['REDIRECT_URL']));
-    while (substr($getstr,0,1)=='/' ||substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
+    $getstr = substr(urldecode($_SERVER['REQUEST_URI']), strlen(urldecode($_SERVER['REDIRECT_URL'])));
+    while (substr($getstr,0,1)=='/' || substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
     $getstrarr = explode("&",$getstr);
-    foreach ($getstrarr as $getvalues) {
+    foreach ($getstrarr as $getvalues) if ($getvalues!='') {
         $pos = strpos($getvalues,"=");
 		//echo $pos;
-        if ($getvalues!=''&&$pos>0) {
+        if ($pos>0) {
             $getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
         } else $getarry[urldecode($getvalues)] = true;
     }
@@ -287,7 +281,8 @@ function list_files($path)
             // rename .scfupload file without login.
             // 无需登录即可重命名.scfupload后缀文件，filemd5为用户提交，可被构造，问题不大，以后处理
             $oldname = spurlencode($_GET['filename']);
-            $ext = strtolower(substr($oldname, strrpos($oldname, '.')));
+            $pos = strrpos($oldname, '.');
+            if ($pos>0) $ext = strtolower(substr($oldname, $pos));
             $oldname = path_format(path_format($_SERVER['list_path'] . path_format($path)) . '/' . $oldname . '.scfupload' );
             $data = '{"name":"' . $_GET['filemd5'] . $ext . '"}';
             //echo $oldname .'<br>'. $data;
@@ -333,7 +328,7 @@ function list_files($path)
     } else {
         echo 'Error $files' . json_encode($files, JSON_PRETTY_PRINT);
         $_SERVER['retry']++;
-        if ($_SERVER['retry']>3) return list_files($path);
+        if ($_SERVER['retry']<3) return list_files($path);
     }
 }
 
@@ -589,7 +584,7 @@ namespace:' . $namespace . '<br>
     if ($_POST['submit1']) {
         foreach ($_POST as $k => $v) {
             if (in_array($k, $constEnv)) {
-                $tmp[$k] = $v;
+                if (!(getenv($k)==''&&$v=='')) $tmp[$k] = $v;
             }
         }
         $response = json_decode(setHerokuConfig($function_name, $tmp, getenv('APIKey')), true);
@@ -603,7 +598,13 @@ function_name:' . $_SERVER['function_name'] . '<br>
             $html .= '<script>location.href=location.href</script>';
         }
     }
+    if ($_GET['preview']) {
+        $preurl = $_SERVER['PHP_SELF'] . '?preview';
+    } else {
+        $preurl = path_format($_SERVER['PHP_SELF'] . '/');
+    }
     $html .= '
+        <a href="'.$preurl.'">'.$constStr['Back'][$constStr['language']].'</a>&nbsp;&nbsp;&nbsp;
         <a href="https://github.com/qkqpttgf/herokuOnedrive">Github</a><br>';
     /*if ($needUpdate) {
         $html .= '<pre>' . $_SERVER['github_version'] . '</pre>
@@ -746,7 +747,7 @@ function render_list($path, $files)
         <li><a onclick="showdiv(event,'create','');"><?php echo $constStr['Create'][$constStr['language']]; ?></a></li>
         <li><a onclick="showdiv(event,'encrypt','');"><?php echo $constStr['encrypt'][$constStr['language']]; ?></a></li>
 <?php   } ?>
-        <li><a <?php if (getenv('APIKey')!='') { ?>href="?setup" target="_blank"<?php } else { ?>onclick="alert('<?php echo $constStr['SetSecretsFirst'][$constStr['language']]; ?>');"<?php } ?>><?php echo $constStr['Setup'][$constStr['language']]; ?></a></li>
+        <li><a <?php if (getenv('APIKey')!='') { ?>href="<?php echo $_GET['preview']?'?preview&':'?';?>setup"<?php } else { ?>onclick="alert('<?php echo $constStr['SetSecretsFirst'][$constStr['language']]; ?>');"<?php } ?>><?php echo $constStr['Setup'][$constStr['language']]; ?></a></li>
         <li><a onclick="logout()"><?php echo $constStr['Logout'][$constStr['language']]; ?></a></li>
     </ul></li>
 <?php
@@ -925,7 +926,9 @@ function render_list($path, $files)
 <?php                           } elseif (in_array($ext, $exts['txt'])) { ?>
                             <ion-icon name="clipboard"></ion-icon>
 <?php                           } elseif (in_array($ext, $exts['zip'])) { ?>
-                            <ion-icon name="logo-buffer"></ion-icon>
+                            <ion-icon name="filing"></ion-icon>
+<?php                           } elseif ($ext=='iso') { ?>
+                            <ion-icon name="disc"></ion-icon>
 <?php                           } elseif ($ext=='apk') { ?>
                             <ion-icon name="logo-android"></ion-icon>
 <?php                           } elseif ($ext=='exe') { ?>
@@ -1439,7 +1442,7 @@ function render_list($path, $files)
             tr1.appendChild(td2);
             td2.setAttribute('id','upfile_td2_'+timea+'_'+i);
             td2.innerHTML='<?php echo $constStr['GetUploadLink'][$constStr['language']]; ?> ...';
-            if (file.size>15*1024*1024*1024) {
+            if (file.size>100*1024*1024*1024) {
                 td2.innerHTML='<font color="red"><?php echo $constStr['UpFileTooLarge'][$constStr['language']]; ?></font>';
                 uploadbuttonshow();
                 return;

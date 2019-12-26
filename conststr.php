@@ -155,6 +155,10 @@ $constStr = [
         'en-us' => 'Setup',
         'zh-cn' => '设置',
     ],
+    'Back' => [
+        'en-us' => 'Back',
+        'zh-cn' => '返回',
+    ],
     'NotNeedUpdate' => [
         'en-us' => 'Not Need Update',
         'zh-cn' => '不需要更新',
@@ -277,7 +281,7 @@ $constStr = [
     ],
     'UpFileTooLarge' => [
         'en-us' => 'The File is too Large!',
-        'zh-cn' => '大于15G，终止上传。',
+        'zh-cn' => '文件过大，终止上传。',
     ],
     'UploadStart' => [
         'en-us' => 'Upload Start',
@@ -336,7 +340,7 @@ $constStr = [
         'zh-cn' => '稍等',
     ],
     'WaitJumpIndex' => [
-        'en-us' => 'Wait 5s jump to index page',
+        'en-us' => 'Wait 5s jump to Home page',
         'zh-cn' => '等5s跳到首页',
     ],
     'JumptoOffice' => [

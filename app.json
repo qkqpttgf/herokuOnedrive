@@ -1,0 +1,15 @@
+{
+  "name": "herokuOnedrive",
+  "description": "Deploy herokuOnedrive to heroku",
+  "website": "https://github.com/qkqpttgf/herokuOnedrive",
+  "repository": "https://github.com/qkqpttgf/herokuOnedrive",
+  "success_url": "/",
+  "env": {
+    "admin": {
+       "description": "admin password to manage Onedrive files. 管理密码，不添加时不显示登录页面且无法登录。"
+     },
+    "APIKey": {
+       "description": "Get the API Key at https://dashboard.heroku.com/account (PageDown to find it). 在英文里的URL查找API Key，倒数第几栏。"
+     }
+  }
+}

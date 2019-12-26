@@ -223,7 +223,7 @@ function_name:' . $_SERVER['function_name'] . '<br>
                 $linklang='en-us';
             } else $linklang='zh-cn';
             $ru = "https://developer.microsoft.com/".$linklang."/graph/quick-start?appID=_appId_&appName=_appName_&redirectUrl=".$_SERVER['redirect_uri']."&platform=option-php";
-            $deepLink = "/quickstart/graphIO?publicClientSupport=false&appName=one_scf&redirectUrl=".$_SERVER['redirect_uri']."&allowImplicitFlow=false&ru=".urlencode($ru);
+            $deepLink = "/quickstart/graphIO?publicClientSupport=false&appName=HerokuOnedrive&redirectUrl=".$_SERVER['redirect_uri']."&allowImplicitFlow=false&ru=".urlencode($ru);
             $app_url = "https://apps.dev.microsoft.com/?deepLink=".urlencode($deepLink);
             $html = '
     <form action="?install1" method="post">
