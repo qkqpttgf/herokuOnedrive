@@ -99,13 +99,10 @@ function main_handler($event, $context)
             return output('', 302, [ 'Location' => $url ]);
         }
     }
-    if (getenv('admin')!='') if ($_COOKIE[$_SERVER['function_name'].'admin']==md5(getenv('admin')) || $_POST['password1']==getenv('admin') ) {
-        $_SERVER['admin']=1;
-    } else {
-        $_SERVER['admin']=0;
-    }
+    $_SERVER['admin']=0;
+    if (getenv('admin')!='') if ( is_cookie_admin() || is_post_admin() ) $_SERVER['admin']=1;
     //$_SERVER['needUpdate'] = needUpdate();
-    if ($_GET['setup']) if ($_SERVER['admin'] && getenv('APIKey')!='') {
+    if (isset($_GET['setup'])) if ($_GET['setup']) if ($_SERVER['admin'] && getenv('APIKey')!='') {
         // setup Environments. 设置，对环境变量操作
         return EnvOpt($_SERVER['function_name'], $_SERVER['needUpdate']);
     } else {
