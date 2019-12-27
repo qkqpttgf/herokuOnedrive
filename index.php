@@ -43,9 +43,7 @@ if ($_SERVER['USER']!='qcloud') {
             $getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
         } else $getarry[urldecode($getvalues)] = true;
     }
-    if ($getarry!='') {
-        $event['queryString'] = $getarry;
-    } else {
+    if (isset($getarry)) {
         $event['queryString'] = $getarry;
     }
     $event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
