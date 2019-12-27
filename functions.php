@@ -323,7 +323,8 @@ function GetPathSetting($event, $context)
 {
     $_SERVER['function_name'] = $context['function_name'];
     $host_name = $event['headers']['host'];
-    $serviceId = $event['requestContext']['serviceId'];
+    if (isset($event['requestContext']['serviceId'])) $serviceId = $event['requestContext']['serviceId'];
+    else $serviceId = '';
     $public_path = path_format(getenv('public_path'));
     $private_path = path_format(getenv('private_path'));
     $domain_path = getenv('domain_path');
@@ -349,7 +350,7 @@ function GetPathSetting($event, $context)
         $_SERVER['base_path'] = '/';//$event['requestContext']['path'];
         $_SERVER['list_path'] = $private_path;
         $_SERVER['Region'] = getenv('Region');
-        $path = substr($event['path'], strlen($event['requestContext']['path']));
+        $path = substr($event['path'], strlen('/')); //$event['requestContext']['path']
     }
     if (substr($path,-1)=='/') $path=substr($path,0,-1);
     if (empty($_SERVER['list_path'])) {
