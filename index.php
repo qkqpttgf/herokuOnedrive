@@ -101,7 +101,7 @@ function main_handler($event, $context)
     }
     $_SERVER['admin']=0;
     if (getenv('admin')!='') if ( is_cookie_admin() || is_post_admin() ) $_SERVER['admin']=1;
-    //$_SERVER['needUpdate'] = needUpdate();
+    $_SERVER['needUpdate'] = needUpdate();
     if (isset($_GET['setup'])) if ($_GET['setup']) if ($_SERVER['admin'] && getenv('APIKey')!='') {
         // setup Environments. 设置，对环境变量操作
         return EnvOpt($_SERVER['function_name'], $_SERVER['needUpdate']);
@@ -302,7 +302,7 @@ function list_files($path)
         if ($_SERVER['ajax']) return output($constStr['RefleshtoLogin'][$constStr['language']],401);
     }
     $_SERVER['ishidden'] = passhidden($path);
-    if ($_GET['thumbnails']) {
+    if (isset($_GET['thumbnails'])) if ($_GET['thumbnails']) {
         if ($_SERVER['ishidden']<4) {
             if (in_array(strtolower(substr($path, strrpos($path, '.') + 1)), $exts['img'])) {
                 return get_thumbnails_url($path);
@@ -856,7 +856,8 @@ function render_list($path, $files)
                     </div>
                 </div>
 <?php           } elseif (isset($files['folder'])) {
-                    $filenum = $_POST['filenum'];
+                    if (isset($_POST['filenum'])) $filenum = $_POST['filenum'];
+                    else $filenum = 0;
                     if (!$filenum and $files['folder']['page']) $filenum = ($files['folder']['page']-1)*200;
                     $readme = false; ?>
                 <table class="list-table" id="list-table">
