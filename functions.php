@@ -3,7 +3,7 @@
 function config_oauth()
 {
     global $constStr;
-    $constStr['language'] = $_COOKIE['language'];
+    if (isset($_COOKIE['language'])) $constStr['language'] = $_COOKIE['language'];
     if ($constStr['language']=='') $constStr['language'] = getenv('language');
     if ($constStr['language']=='') $constStr['language'] = 'en-us';
     $_SERVER['sitename'] = getenv('sitename');
