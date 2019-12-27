@@ -858,7 +858,7 @@ function render_list($path, $files)
 <?php           } elseif (isset($files['folder'])) {
                     if (isset($_POST['filenum'])) $filenum = $_POST['filenum'];
                     else $filenum = 0;
-                    if (!$filenum and $files['folder']['page']) $filenum = ($files['folder']['page']-1)*200;
+                    if (isset($files['folder']['page'])) if (!$filenum && $files['folder']['page']) $filenum = ($files['folder']['page']-1)*200;
                     $readme = false; ?>
                 <table class="list-table" id="list-table">
                     <tr id="tr0">
@@ -1137,7 +1137,7 @@ function render_list($path, $files)
         <div style="margin:50px">
             <a onclick="operatediv_close('login')" class="operatediv_close"><?php echo $constStr['Close'][$constStr['language']]; ?></a>
 	        <center>
-	            <form action="<?php echo $_GET['preview']?'?preview&':'?';?>admin" method="post">
+	            <form action="<?php echo isset($_GET['preview'])?'?preview&':'?';?>admin" method="post">
 		        <input id="login_input" name="password1" type="password" placeholder="<?php echo $constStr['InputPassword'][$constStr['language']]; ?>">
 		        <input type="submit" value="<?php echo $constStr['Login'][$constStr['language']]; ?>">
 	            </form>
@@ -1183,7 +1183,7 @@ function render_list($path, $files)
         $readme.innerHTML = marked(document.getElementById('readme-md').innerText)
     }
 <?php
-    if ($_GET['preview']) { //is preview mode. 在预览时处理 ?>
+    if (isset($_GET['preview'])) { //is preview mode. 在预览时处理 ?>
     var $url = document.getElementById('url');
     if ($url) {
         $url.innerHTML = location.protocol + '//' + location.host + $url.innerHTML;
@@ -1816,6 +1816,6 @@ function render_list($path, $files)
 </html>
 <?php
     $html=ob_get_clean();
-    if ($_SERVER['Set-Cookie']!='') return output($html, $statusCode, [ 'Set-Cookie' => $_SERVER['Set-Cookie'], 'Content-Type' => 'text/html' ]);
+    if (isset($_SERVER['Set-Cookie'])) return output($html, $statusCode, [ 'Set-Cookie' => $_SERVER['Set-Cookie'], 'Content-Type' => 'text/html' ]);
     return output($html,$statusCode);
 }
