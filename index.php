@@ -22,7 +22,7 @@ include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
-error_log( '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>' );
+//error_log( '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>' );
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
