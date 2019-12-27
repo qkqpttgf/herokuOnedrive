@@ -85,7 +85,7 @@ function main_handler($event, $context)
     } else {
         $adminloginpage = getenv('adminloginpage');
     }
-    if ($_GET[$adminloginpage]) {
+    if (isset($_GET[$adminloginpage])) if ($_GET[$adminloginpage]) {
         if ($_GET['preview']) {
             $url = $_SERVER['PHP_SELF'] . '?preview';
         } else {
