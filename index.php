@@ -28,8 +28,9 @@ if ($_SERVER['USER']!='qcloud') {
     $event['headers'] = [
         'cookie' => $_COOKIE,
         'host' => $_SERVER['HTTP_HOST'],
-        'x-requested-with' => $_SERVER['HTTP_X_REQUESTED_WITH'],
+        'x-requested-with' => '',
     ];
+    if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) $event['headers']['x-requested-with'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
     if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
     else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
     $event['path'] = $_SERVER['REDIRECT_URL'];
