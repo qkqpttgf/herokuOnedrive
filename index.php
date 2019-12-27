@@ -45,7 +45,7 @@ if ($_SERVER['USER']!='qcloud') {
     }
     if (isset($getarry)) {
         $event['queryString'] = $getarry;
-    }
+    } else $event['queryString'] = '';
     $event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
     $context['function_name'] = getenv('function_name');
 	if ($context['function_name']=='') {
