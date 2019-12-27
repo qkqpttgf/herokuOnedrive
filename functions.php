@@ -340,7 +340,7 @@ function GetPathSetting($event, $context)
     // public_path is not Parent Dir of private_path. public_path 不能是 private_path 的上级目录。
     if ($tmp_path!='') if ($public_path == substr($tmp_path,0,strlen($public_path))) $public_path=$tmp_path;
     if ($public_path == substr($private_path,0,strlen($public_path))) $public_path=$private_path;
-    if ( $serviceId === substr($host_name,0,strlen($serviceId)) ) {
+    if ( $serviceId!=='' && $serviceId === substr($host_name,0,strlen($serviceId)) ) {
         $_SERVER['base_path'] = '/'.$event['requestContext']['stage'].'/'.$_SERVER['function_name'].'/';
         $_SERVER['list_path'] = $public_path;
         $_SERVER['Region'] = substr($host_name, strpos($host_name, '.')+1);
