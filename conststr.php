@@ -31,6 +31,7 @@ $exts['video'] = ['mp4', 'webm', 'mkv', 'mov', 'flv', 'blv', 'avi', 'wmv'];
 $exts['zip'] = ['zip', 'rar', '7z', 'gz', 'tar'];
 
 $constStr = [
+    'language' => '',
     'languages' => [
         'en-us' => 'English',
         'zh-cn' => '中文',
