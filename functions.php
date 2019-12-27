@@ -408,7 +408,7 @@ function message($message, $title = 'Message', $statusCode = 200)
 
 function needUpdate()
 {
-    if ($_SERVER['admin'] && getenv('SecretId')!='' && getenv('SecretKey')!='') {
+    /*if ($_SERVER['admin'] && getenv('APIKey')!='') {
         $current_ver = file_get_contents(__DIR__ . '/version');
         $current_ver = substr($current_ver, strpos($current_ver, '.')+1);
         $current_ver = explode(urldecode('%0A'),$current_ver)[0];
@@ -421,7 +421,7 @@ function needUpdate()
             $_SERVER['github_version'] = $github_version;
             return 1;
         }
-    }
+    }*/
     return 0;
 }
 
