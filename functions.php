@@ -385,6 +385,22 @@ function is_imgup_path($path)
     return 0;
 }
 
+function is_cookie_admin()
+{
+    if (isset($_COOKIE[$_SERVER['function_name'].'admin'])) {
+        if ( $_COOKIE[$_SERVER['function_name'].'admin'] == md5(getenv('admin')) ) return 1;
+    }
+    return 0;
+}
+
+function is_post_admin()
+{
+    if (isset($_POST['password1'])) {
+        if ( $_POST['password1'] == getenv('admin') ) return 1;
+    }
+    return 0;
+}
+
 function message($message, $title = 'Message', $statusCode = 200)
 {
     return output('<html><meta charset=utf-8><body><h1>' . $title . '</h1><p>' . $message . '</p></body></html>', $statusCode);
