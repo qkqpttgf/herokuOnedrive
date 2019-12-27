@@ -675,7 +675,9 @@ function render_list($path, $files)
     $p_path=str_replace('&amp;','&',$p_path);
     $pretitle = str_replace('%23','#',$pretitle);
     $statusCode=200;
-    date_default_timezone_set(get_timezone($_COOKIE['timezone']));
+    if (isset($_COOKIE['timezone'])) $timezonenum = $_COOKIE['timezone'];
+    else $timezonenum = '';
+    date_default_timezone_set(get_timezone($timezonenum));
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $constStr['language']; ?>">
@@ -1378,7 +1380,7 @@ function render_list($path, $files)
     }
 <?php
     }
-    if ($_COOKIE['timezone']=='') { // cookie timezone. 无时区写时区 ?>
+    if ($timezonenum=='') { // cookie timezone. 无时区写时区 ?>
     var nowtime= new Date();
     var timezone = 0-nowtime.getTimezoneOffset()/60;
     var expd = new Date();
