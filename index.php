@@ -31,12 +31,10 @@ if ($_SERVER['USER']!='qcloud') {
         'x-requested-with' => '',
     ];
     if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) $event['headers']['x-requested-with'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
-	error_log('REDIRECT'.$_SERVER['REDIRECT_URL']);
     if (!isset($_SERVER['REDIRECT_URL'])) $_SERVER['REDIRECT_URL'] = 'index.php';
     $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
     if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
     $event['path'] = $_SERVER['REDIRECT_URL'];
-	error_log('path'.$event['path']);
     $getstr = substr(urldecode($_SERVER['REQUEST_URI']), strlen(urldecode($_SERVER['REDIRECT_URL'])));
     while (substr($getstr,0,1)=='/' || substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
     $getstrarr = explode("&",$getstr);
