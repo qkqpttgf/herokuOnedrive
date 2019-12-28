@@ -22,16 +22,18 @@ include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
-//echo '<pre>' . json_encode($_SERVER, JSON_PRETTY_PRINT) . '</pre>';
+//error_log( json_encode($_SERVER, JSON_PRETTY_PRINT) );
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
         'cookie' => $_COOKIE,
         'host' => $_SERVER['HTTP_HOST'],
-        'x-requested-with' => $_SERVER['HTTP_X_REQUESTED_WITH'],
+        'x-requested-with' => '',
     ];
+    if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) $event['headers']['x-requested-with'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
+    if (!isset($_SERVER['REDIRECT_URL'])) $_SERVER['REDIRECT_URL'] = 'index.php';
+    $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
     if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
-    else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
     $event['path'] = $_SERVER['REDIRECT_URL'];
     $getstr = substr(urldecode($_SERVER['REQUEST_URI']), strlen(urldecode($_SERVER['REDIRECT_URL'])));
     while (substr($getstr,0,1)=='/' || substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
@@ -43,7 +45,9 @@ if ($_SERVER['USER']!='qcloud') {
             $getarry[urldecode(substr($getvalues,0,$pos))] = urldecode(substr($getvalues,$pos+1));
         } else $getarry[urldecode($getvalues)] = true;
     }
-    $event['queryString'] = $getarry;
+    if (isset($getarry)) {
+        $event['queryString'] = $getarry;
+    } else $event['queryString'] = '';
     $event['requestContext']['sourceIp'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
     $context['function_name'] = getenv('function_name');
 	if ($context['function_name']=='') {
