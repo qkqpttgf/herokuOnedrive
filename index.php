@@ -22,7 +22,7 @@ include 'vendor/autoload.php';
 include 'conststr.php';
 include 'functions.php';
 include 'herokuapi.php';
-error_log( json_encode($_SERVER, JSON_PRETTY_PRINT) );
+//error_log( json_encode($_SERVER, JSON_PRETTY_PRINT) );
 if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['Onedrive_ver']=='') $_SERVER['Onedrive_ver'] = 'MS';
     $event['headers'] = [
@@ -34,6 +34,7 @@ if ($_SERVER['USER']!='qcloud') {
     if ($_SERVER['REDIRECT_URL']=='') $_SERVER['REDIRECT_URL']='/';
     else $_SERVER['REDIRECT_URL']=spurlencode($_SERVER['REDIRECT_URL'], '/');
     $event['path'] = $_SERVER['REDIRECT_URL'];
+	error_log('path'.$event['path']);
     $getstr = substr(urldecode($_SERVER['REQUEST_URI']), strlen(urldecode($_SERVER['REDIRECT_URL'])));
     while (substr($getstr,0,1)=='/' || substr($getstr,0,1)=='?') $getstr = substr($getstr,1);
     $getstrarr = explode("&",$getstr);
